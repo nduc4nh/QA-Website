@@ -1,0 +1,35 @@
+.footer-container{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+}
+
+.footer-btn-group{
+    border-radius: 10px;
+}
+
+.footer-btn-upvote{
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+    border: none;
+}
+
+.footer-btn-downvote{
+    border-bottom-right-radius: 0px;
+    border-top-right-radius: 0px;
+    border: none;
+}
+.footer-btn-comment{
+    border: none;
+}
+
+.footer-left-content{
+    flex: 1;    
+}
+
+.footer-right-content{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}

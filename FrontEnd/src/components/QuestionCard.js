@@ -2,6 +2,7 @@ import React from 'react'
 import { Card } from 'react-bootstrap'
 import FlatListItem from './FlatListItem'
 import './css/QuestionCard.css'
+import InteractiveFooter from './InteractiveFooter'
 
 const QuestionCard = () => {
     return (
@@ -10,6 +11,7 @@ const QuestionCard = () => {
             <Card.Title>Title</Card.Title>
             <Card.Body>Content</Card.Body>
             <Card.Footer>
+                <InteractiveFooter/>
             </Card.Footer>
         </Card>
     )
