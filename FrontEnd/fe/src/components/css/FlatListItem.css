@@ -1,0 +1,27 @@
+.container-item{
+    display: flex;
+    height: 50px;
+    flex-direction: row;
+    padding: 1px;
+    border-radius: 5px;
+}
+
+.container-item:hover{
+    background-color: #A9A9A9;
+}
+
+.icon{
+    display: flex;
+    flex:1;
+    background-color: aqua;
+    justify-content: center;
+    align-items: center;
+}
+
+.name{
+    display: flex;
+    flex:5;
+    background-color: red;
+    align-items: center;
+    
+}

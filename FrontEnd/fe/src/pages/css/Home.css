@@ -1,0 +1,35 @@
+.home{
+    max-height: 2000px;
+    width: 100%;
+    flex-direction: column;
+}
+
+.header-home{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.content-home{
+    display: flex;
+    flex:1;
+    flex-direction: row;
+    width: 100%;
+}
+
+.content-left-side-home{
+    flex: 1;
+    background-color: blueviolet;
+}
+
+.content-main-home{
+    
+    flex: 4;
+    background-color: blue;
+    padding-left: 40px;
+}
+
+.content-right-side-home{
+    flex: 1;
+    background-color: blueviolet;
+}
+
