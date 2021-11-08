@@ -1,0 +1,56 @@
+.content-header-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.content-body-container{
+
+}
+
+.content-question-container{
+    
+}
+
+.poster-container{
+    display: flex;
+    height: 60px;
+    flex-direction: row;
+    
+}
+
+.poster-info-holder{
+    flex:1; 
+    display:"flex";
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.poster-name-holder{
+    flex:1;
+    display:flex
+}
+
+
+.poster-date-holder{
+    flex:1;
+    display:flex
+}
+
+
+.content-answer-container{
+
+}
+
+.title{
+    font: bold;
+    font-size: 40;
+}
+
+.title-footer{
+    flex:1;
+    display:flex;
+    flex-direction: row;
+    width: 100%;
+}
+

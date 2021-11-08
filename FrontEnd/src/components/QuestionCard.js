@@ -4,17 +4,17 @@ import FlatListItem from './FlatListItem'
 import './css/QuestionCard.css'
 import InteractiveFooter from './InteractiveFooter'
 
-const QuestionCard = () => {
+const QuestionCard = ({ question }) => {
     return (
-        <Card className = "card-container"> 
-            <Card.Header> <FlatListItem name = {"user"}/></Card.Header>
-            <Card.Title>Title</Card.Title>
-            <Card.Body>Content</Card.Body>
+        <Card className="card-container">
+            <Card.Header> <FlatListItem userItem={question.user} /></Card.Header>
+            <Card.Title>{question.title}</Card.Title>
+            <Card.Body>{question.content}</Card.Body>
             <Card.Footer>
-                <InteractiveFooter/>
+                <InteractiveFooter />
             </Card.Footer>
         </Card>
-    )
+    )   
 }
 
 export default QuestionCard
