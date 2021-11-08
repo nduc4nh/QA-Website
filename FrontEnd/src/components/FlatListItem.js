@@ -1,20 +1,21 @@
 import React from 'react'
 import './css/FlatListItem.css'
-
-const FlatListItem = ({ name }) => {
+import { Image } from 'react-bootstrap'
+const FlatListItem = ({ user }) => {
     const onClickItem = () =>{
         console.log("abc");
     }
+    console.log(user);
 
     return (
         <div
             onClick={onClickItem}
             className='container-item'>
             <div className='icon'>
-                <img src = {"sc"}/>
+                <Image src = {user.avatar} roundedCircle/>
             </div>
             <div className='name'>
-                {name}
+                {user.name}
             </div>
 
         </div>

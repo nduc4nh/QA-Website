@@ -3,25 +3,12 @@ import { Dropdown } from 'react-bootstrap'
 
 import FlatListItem from './FlatListItem'
 
-const CustomFlatList = () => {
+const CustomFlatList = ({users}) => {
+    console.log(users);
     return (
         <div>
             <div>
-                <FlatListItem name="Cras justo odio" />
-                <FlatListItem name="Dapibus ac facilisis in" />
-                <FlatListItem name="Morbi leo risus" />
-                <FlatListItem name="Porta ac consectetur ac" />
-                <FlatListItem name="Vestibulum at eros" />
-                <FlatListItem name="Cras justo odio" />
-                <FlatListItem name="Dapibus ac facilisis in" />
-                <FlatListItem name="Morbi leo risus" />
-                <FlatListItem name="Porta ac consectetur ac" />
-                <FlatListItem name="Vestibulum at eros" />
-                <FlatListItem name="Cras justo odio" />
-                <FlatListItem name="Dapibus ac facilisis in" />
-                <FlatListItem name="Morbi leo risus" />
-                <FlatListItem name="Porta ac consectetur ac" />
-                <FlatListItem name="Vestibulum at eros" />
+                {users.map((item) => (<FlatListItem user={item} />))}
             </div>
             <Dropdown.Divider />
         </div>

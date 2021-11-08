@@ -18,18 +18,15 @@
 
 .content-left-side-home{
     flex: 1;
-    background-color: blueviolet;
 }
 
 .content-main-home{
     
     flex: 4;
-    background-color: blue;
     padding-left: 40px;
 }
 
 .content-right-side-home{
     flex: 1;
-    background-color: blueviolet;
 }
 

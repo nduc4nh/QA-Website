@@ -1,0 +1,27 @@
+.comment-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.avatar-container{
+    padding: 5px;
+}
+
+.comment-submit-container{
+    flex:1;
+    display: flex;
+    flex-direction: row;
+    padding-left: 10px;
+}
+
+.comment-form-container{
+    flex:4;
+    padding: 5px;
+}
+
+.comment-btn-container{
+    flex:1;
+    padding: 5px;
+}
+
