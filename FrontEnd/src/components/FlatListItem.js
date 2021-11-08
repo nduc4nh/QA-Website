@@ -1,21 +1,22 @@
 import React from 'react'
 import './css/FlatListItem.css'
 import { Image } from 'react-bootstrap'
-const FlatListItem = ({ user }) => {
+import PropTypes from 'prop-types'
+
+const FlatListItem = ({ userItem, name }) => {
     const onClickItem = () =>{
         console.log("abc");
     }
-    console.log(user);
 
     return (
         <div
             onClick={onClickItem}
             className='container-item'>
             <div className='icon'>
-                <Image src = {user.avatar} roundedCircle/>
+                {userItem && <Image src = {userItem.avatar} width="50" height="50" roundedCircle/>}
             </div>
             <div className='name'>
-                {user.name}
+                {userItem != undefined?userItem.name:name}
             </div>
 
         </div>
@@ -23,3 +24,7 @@ const FlatListItem = ({ user }) => {
 }
 
 export default FlatListItem
+
+FlatListItem.propTypes = {
+    users: PropTypes.object
+}

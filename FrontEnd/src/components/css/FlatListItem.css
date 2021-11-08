@@ -13,15 +13,13 @@
 .icon{
     display: flex;
     flex:1;
-    background-color: aqua;
     justify-content: center;
     align-items: center;
 }
 
 .name{
     display: flex;
-    flex:5;
-    background-color: red;
+    flex:5;     
     align-items: center;
     
 }

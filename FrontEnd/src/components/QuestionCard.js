@@ -7,7 +7,7 @@ import InteractiveFooter from './InteractiveFooter'
 const QuestionCard = ({ question }) => {
     return (
         <Card className="card-container">
-            <Card.Header> <FlatListItem name={question.user.name} /></Card.Header>
+            <Card.Header> <FlatListItem userItem={question.user} /></Card.Header>
             <Card.Title>{question.title}</Card.Title>
             <Card.Body>{question.content}</Card.Body>
             <Card.Footer>
