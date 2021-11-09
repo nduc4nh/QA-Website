@@ -1,17 +1,18 @@
 import React from 'react';
-import CommenCard from './components/CommenCard';
-import CommentBar from './components/CommentBar';
-import CommentBox from './components/CommentBox';
-import CommentDropDown from './components/CommentBox';
-import QuestionCard from './components/QuestionCard';
-import Home from './pages/HomePage';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import HomePage from './pages/HomePage';
+
 import QuestionPage from './pages/QuestionPage';
 const App = () => {
   /*<Home/>*/
   return (
-    <div>
-      <Home/>
-    </div>
+    <Router>
+      <Routes>
+        <Route element={<HomePage/>} path="/"></Route>
+        <Route element={<QuestionPage/>} path="/question/:questionId"></Route>
+        <Route element={<QuestionPage/>} path="/question/"></Route>
+      </Routes>
+    </Router>
   );
 }
 
