@@ -5,9 +5,9 @@ import React from 'react'
 
 const NavigationBar = () => {
     return (
-        <Navbar bg="light" expand="lg" style = {{width:"100%"}}>
-            <Container>
-                <Navbar.Brand href="#home">Andreact</Navbar.Brand>
+        <Navbar bg="white" expand="lg" style = {{width:"100%", WebkitBoxShadow:"0px 1px 1px #a3aaaf",MozBoxShadow:"0px 1px 1px #a3aaaf",boxShadow:"0px 1px 1px #a3aaaf"}}>
+            <Container style={{paddingLeft:120}}>
+                <Navbar.Brand href="#home">QA Webname</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">

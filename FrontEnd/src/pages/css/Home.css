@@ -2,6 +2,7 @@
     max-height: 2000px;
     width: 100%;
     flex-direction: column;
+    background-color: #EFEFEF;
 }
 
 .header-home{

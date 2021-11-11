@@ -19,7 +19,7 @@ const HomePage = () => {
         },
         {
             title: "Question title",
-            content: "Question content, question content",
+            content: "Question content, question c, question content, question content",
             user: {
                 name: "poster",
                 avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",

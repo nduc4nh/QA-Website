@@ -7,7 +7,7 @@ import { ButtonGroup, Button } from 'react-bootstrap'
 import Image from 'react-bootstrap/Image'
 
 
-const CommenCard = ({ username, date, passage, upvotes, downvotes, comment }) => {
+const CommentCard = ({ username, date, passage, upvotes, downvotes, comment }) => {
     return (
         <div className="comment-container">
             <div className="avatar-container">
@@ -41,4 +41,4 @@ const CommenCard = ({ username, date, passage, upvotes, downvotes, comment }) =>
     )
 }
 
-export default CommenCard
+export default CommentCard

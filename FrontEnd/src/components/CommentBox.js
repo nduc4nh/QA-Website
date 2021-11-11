@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dropdown } from 'react-bootstrap'
-import CommenCard from './CommenCard'
+import CommentCard from './CommentCard'
 const CommentBox = ({ comments }) => {
     const commentsTmp = [
         {
@@ -40,7 +40,7 @@ const CommentBox = ({ comments }) => {
         <div>
             {commentsTmp.map((item) => (
                 <div>
-                    <CommenCard comment={item} />
+                    <CommentCard comment={item} />
                     <Dropdown.Divider/>
                 </div>
             ))}
