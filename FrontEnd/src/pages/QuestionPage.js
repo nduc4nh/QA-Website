@@ -7,6 +7,7 @@ import { FaRegEdit } from 'react-icons/fa'
 import CommentBar from '../components/CommentBar'
 import CommentBox from '../components/CommentBox'
 import { useRef } from 'react'
+import Navigationbar2 from '../components/Navigationbar2'
 
 const useFocus = () => {
     const htmlElRef = useRef(null)
@@ -30,7 +31,7 @@ const QuestionPage = ({ question }) => {
     return (
         <div className='home'>
             <div className='header-home'>
-                <NavigationBar />
+                <NavigationBar/>
             </div>
             <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
                 <div className='content-home'>

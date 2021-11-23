@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap'
 import './css/Home.css'
 import CustomFlatList from '../components/CustomFlatList'
 import QuestionCard from '../components/QuestionCard'
-
+import Navigationbar2 from '../components/Navigationbar2'
 const HomePage = () => {
     const questions = [
         {
@@ -61,7 +61,7 @@ const HomePage = () => {
     return (
         <div className='home'>
             <div className='header-home'>
-                <NavigationBar />
+                <Navigationbar2 />
             </div>
             <Container style={{ paddingLeft: "100px", paddingRight: "100px"}}>
                 <div className='content-home'>

@@ -1,0 +1,16 @@
+.dropdown-item-container{
+    display: flex;
+    flex-direction: row;    
+    width: 100%;
+}
+
+.dropdown-item-content{
+    flex:6;
+    text-align: start;
+}
+
+.dropdown-item-time{
+    flex:2;
+    font-size: 10;
+    color:grey  
+}

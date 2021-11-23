@@ -1,0 +1,14 @@
+.noti-indicator{
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 50px;
+    width: 20px;
+    height: 20px;
+    border-radius: 10px 10px;
+    background-color: rgba(255, 0, 0, 0.856);
+}
+
+.noti-indicator .number{
+
+}
