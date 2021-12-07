@@ -22,7 +22,10 @@
 }
 
 .content-main-home{
-    
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 50px;
     flex: 4;
     padding-left: 40px;
 }

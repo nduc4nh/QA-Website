@@ -1,0 +1,52 @@
+.profile-container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 20px;
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: row;
+    height: 300px;
+    width: 100%;
+}
+
+.profile-image{
+    flex: 1;
+}
+
+.profile-bio{
+    flex:2;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-name{
+    text-decoration: solid;
+    font-weight: bold;
+    font-size: 35px;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.other-info{
+    display: flex;
+    flex: 1;
+    padding-top:10px;
+    padding-left: 30px;
+}
+
+.description{
+    margin-top: 1.5rem;
+    padding-left: 2rem;
+    font-style: italic;
+    font-size: 1rem;
+    color:#757575;
+}
+
+.history-content{
+    display: flex;
+    overflow-x: scroll;
+    height: 400px;
+}

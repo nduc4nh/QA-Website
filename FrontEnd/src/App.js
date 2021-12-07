@@ -4,17 +4,19 @@ import HomePage from './pages/HomePage';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import QuestionPage from './pages/QuestionPage';
+import Profile from './pages/Profile';
 const App = () => {
   /*<Home/>*/
   return (
     <Router>
       <Routes>
-        <Route element={<HomePage/>} path="/"></Route>
-        <Route element={<QuestionPage/>} path="/question/:questionId"></Route>
-        <Route element={<QuestionPage/>} path="/question/"></Route>
-        <Route element={<Login/>} path="/login/"></Route>
-        <Route element={<Register/>} path="/register/"></Route>
-        
+        <Route element={<HomePage />} path="/"></Route>
+        <Route element={<QuestionPage />} path="/question/:questionId"></Route>
+        <Route element={<QuestionPage />} path="/question/"></Route>
+        <Route element={<Login />} path="/login/"></Route>
+        <Route element={<Register />} path="/register/"></Route>
+        <Route element={<Profile />} path="/profile/:id"></Route>
+
       </Routes>
     </Router>
   );

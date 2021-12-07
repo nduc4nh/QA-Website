@@ -11,6 +11,7 @@ import { IconContext } from 'react-icons'
 import NotificationBell from './NotificationBell'
 import RoundedImage from './RoundedImage'
 import user from '../assets/user.jpeg'
+import { useNavigate } from 'react-router'
 
 const Brand = styled.h1`
     color: #d54d7b; 
@@ -24,28 +25,31 @@ const Brand = styled.h1`
 `
 const items = [
     {
-        id:1,
-        content:"noti",
+        id: 1,
+        content: "noti",
         time: "5 mins"
     },
     {
-        id:2,
-        content:"noti",
+        id: 2,
+        content: "noti",
         time: "4 mins"
     },
     {
-        id:3,
-        content:"noti",
-        time:"6 mins"
+        id: 3,
+        content: "noti",
+        time: "6 mins"
     }
 ]
 const Navigationbar2 = () => {
+    let navigate = useNavigate();
     return (
         <div className='container-nav'>
             <div className='logo'>
                 <ImageWrapper source={logo} width={50} height={50} />
             </div>
-            <Brand>QA Website</Brand>
+            <CustomButton backgroundColor="white" hoverColor="white" onClick={() => (navigate("/"))}>
+                <Brand>QA Website</Brand>
+            </CustomButton>
             <div className='tool-group'>
                 <SearchBar />
                 <div style={{ marginLeft: "10px", height: "100%" }}>
@@ -54,10 +58,10 @@ const Navigationbar2 = () => {
                     </CustomButton>
                 </div>
                 <div>
-                    <NotificationBell items = {items} number={99} size={40} />
+                    <NotificationBell items={items} number={99} size={40} />
                 </div>
-                <div style={{ marginLeft: "20px", marginRight:"10px"}}>
-                    <CustomButton border = "10px">
+                <div style={{ marginLeft: "20px", marginRight: "10px" }}>
+                    <CustomButton border="10px" onClick={() => (navigate("/profile/1", { replace: true }))}>
                         <RoundedImage source={user} />
                         <div style={{ marginLeft: "10px" }}>
                             Username
@@ -71,10 +75,10 @@ const Navigationbar2 = () => {
                     </div>
                 </CustomButton>
 
-                <div style={{marginLeft:"10px"}}>
+                <div style={{ marginLeft: "10px" }}>
                     <CustomButton border="20px" backgroundColor="#d54d7b" hoverColor="#c2456f">
                         <div style={{ height: "100%", color: "white" }}>
-                            logout
+                            Logout
                         </div>
                     </CustomButton>
                 </div>
