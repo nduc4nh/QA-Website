@@ -21,7 +21,7 @@ const StretchCard = ({ question }) => {
     }
 
     return (
-        <div class="card-container">
+        <div class="stretch-card-container">
             <div style={{
                 position: "absolute",
                 right:5,
