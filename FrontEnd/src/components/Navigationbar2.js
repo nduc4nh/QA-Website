@@ -1,4 +1,4 @@
-import React from 'react'
+import { React, useState } from 'react'
 import './css/navigationbar.css'
 import SearchBar from './SearchBar'
 import logo from '../assets/logo2.png'
@@ -12,6 +12,9 @@ import NotificationBell from './NotificationBell'
 import RoundedImage from './RoundedImage'
 import user from '../assets/user.jpeg'
 import { useNavigate } from 'react-router'
+import Popup from './Popup'
+import CommentBar from './CommentBar'
+import AddQuestionForm from './AddQuestionForm'
 
 const Brand = styled.h1`
     color: #d54d7b; 
@@ -42,48 +45,61 @@ const items = [
 ]
 const Navigationbar2 = () => {
     let navigate = useNavigate();
+    const [isAddQuestion, setIsAddQuestion] = useState(false)
+    const handleAddQuestion = () => {
+        setIsAddQuestion(!isAddQuestion)
+    }
+
     return (
-        <div className='container-nav'>
-            <div className='logo'>
-                <ImageWrapper source={logo} width={50} height={50} />
-            </div>
-            <CustomButton backgroundColor="white" hoverColor="white" onClick={() => (navigate("/"))}>
-                <Brand>QA Website</Brand>
-            </CustomButton>
-            <div className='tool-group'>
-                <SearchBar />
-                <div style={{ marginLeft: "10px", height: "100%" }}>
-                    <CustomButton>
-                        <AiOutlineHome size={40} />
-                    </CustomButton>
+        <div>
+            <div className='container-nav'>
+                <div className='logo'>
+                    <ImageWrapper source={logo} width={50} height={50} />
                 </div>
-                <div>
-                    <NotificationBell items={items} number={99} size={40} />
-                </div>
-                <div style={{ marginLeft: "20px", marginRight: "10px" }}>
-                    <CustomButton border="10px" onClick={() => (navigate("/profile/1", { replace: true }))}>
-                        <RoundedImage source={user} />
-                        <div style={{ marginLeft: "10px" }}>
-                            Username
-                        </div>
-                    </CustomButton>
-                </div>
-
-                <CustomButton border="20px" backgroundColor="#d54d7b" hoverColor="#c2456f">
-                    <div style={{ height: "100%", color: "white" }}>
-                        Add question
-                    </div>
+                <CustomButton backgroundColor="white" hoverColor="white" onClick={() => (navigate("/"))}>
+                    <Brand>QA Website</Brand>
                 </CustomButton>
+                <div className='tool-group'>
+                    <SearchBar />
+                    <div style={{ marginLeft: "10px", height: "100%" }}>
+                        <CustomButton>
+                            <AiOutlineHome size={40} />
+                        </CustomButton>
+                    </div>
+                    <div>
+                        <NotificationBell items={items} number={99} size={40} />
+                    </div>
+                    <div style={{ marginLeft: "20px", marginRight: "10px" }}>
+                        <CustomButton border="10px" onClick={() => (navigate("/profile/1", { replace: true }))}>
+                            <RoundedImage source={user} />
+                            <div style={{ marginLeft: "10px" }}>
+                                Username
+                            </div>
+                        </CustomButton>
+                    </div>
 
-                <div style={{ marginLeft: "10px" }}>
-                    <CustomButton border="20px" backgroundColor="#d54d7b" hoverColor="#c2456f">
+                    <CustomButton border="20px" backgroundColor="#d54d7b" hoverColor="#c2456f" onClick={handleAddQuestion}>
                         <div style={{ height: "100%", color: "white" }}>
-                            Logout
+                            Add question
                         </div>
                     </CustomButton>
-                </div>
-            </div>
 
+                    <div style={{ marginLeft: "10px" }}>
+                        <CustomButton border="20px" backgroundColor="#d54d7b" hoverColor="#c2456f">
+                            <div style={{ height: "100%", color: "white" }}>
+                                Logout
+                            </div>
+                        </CustomButton>
+                    </div>
+                </div>
+
+            </div>
+            {isAddQuestion ?
+                <Popup handleClose = {handleAddQuestion} title = {"Create Question"}>
+                    <div style={{width:"100%", height:"100%" ,paddingRight:"15px"}}>
+                    <AddQuestionForm/>
+                    </div>
+                </Popup> : <></>}
         </div>
     )
 }

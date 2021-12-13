@@ -11,6 +11,8 @@ const CustomButton = ({ children, height, width, border, backgroundColor, hoverC
             onClick={onClick}
             className='btn'
             style={{
+                display:"flex",
+                justifyContent:"center",
                 width: width,
                 height: height,
                 borderRadius: border === undefined ? 0 : border,

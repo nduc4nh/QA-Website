@@ -1,0 +1,26 @@
+.add-question-form-container{
+    width: 100%;
+    height: 100%;
+    border: solid;
+    border:none;
+    outline: none;
+    border-color: #dddddd;
+    outline-color: #dddddd63;    
+    margin-top: 10px;
+}
+
+.custom-divider{
+    margin-right: 30px;
+    border-top: solid;
+    border-color: #e293ae   ;
+}
+.add-title-container{
+    width: 100%;
+    border:none;
+    outline: none;
+    border-color: #dddddd;
+    outline-color: #dddddd63; 
+    margin-top: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
