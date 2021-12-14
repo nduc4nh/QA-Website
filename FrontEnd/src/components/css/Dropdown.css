@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;    
     width: 100%;
+    
 }
 
 .dropdown-item-content{
@@ -12,5 +13,7 @@
 .dropdown-item-time{
     flex:2;
     font-size: 10;
-    color:grey  
+    position: fixed;
+    color:#d54d7b;  
 }
+

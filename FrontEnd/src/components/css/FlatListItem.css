@@ -1,13 +1,19 @@
+.FlatList-list{
+    position: fixed;
+    top: 83px;
+}
+
 .container-item{
     display: flex;
     height: 50px;
     flex-direction: row;
     padding: 1px;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 .container-item:hover{
-    background-color: #A9A9A9;
+    background-color: rgba(169, 169, 169, 0.4);
 }
 
 .icon{
