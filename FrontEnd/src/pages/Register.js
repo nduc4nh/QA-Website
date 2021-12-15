@@ -10,9 +10,12 @@ class Register extends Component{
 
     render(){
         return(
-            <div className="register-background">
-                <div className="register-container">
-                    <div className="register-content row">
+            <div className="login-background">
+        
+                <div className="login-container">
+                    <div className="login-content">
+                        
+                        <div className="col-12 text-header">QA Website</div>
                         <div className="col-12 text-header">Register</div>
                         <div className="col-12 form-group login-input">
                             <label>Email</label>
@@ -35,12 +38,18 @@ class Register extends Component{
                             <span className="text-otherLogin"> Hoặc đăng kí với:</span>
                         </div>
 
-                        <div className="col-12 social-login">
-                            <div className="iconGroup">
-                                <i className="fab fa-facebook social-login-icon"></i>
-                                <i className="fab fa-google social-login-icon"></i>
-                            </div>
-                            
+                        
+                        <div class="auth-form__social">
+                            <a href="" class="auth-form__social-icon--fb auth-form__social-icon--general ">
+                                <i class="auth-form__social-icon fab fa-facebook-square"></i>
+                                <span class="auth-form__title">Đăng kí với Facebook</span>
+                                
+                            </a>
+                            <a href="" class="auth-form__social-icon--gg auth-form__social-icon--general ">
+                                <i class="auth-form__social-icon fab fa-google auth-form__social-gg"></i>
+                                <span class="auth-form__title">Đăng kí với Google</span>
+                                
+                            </a>
                         </div>
 
                     </div>
@@ -52,3 +61,4 @@ class Register extends Component{
     }
 }
 export default Register
+
