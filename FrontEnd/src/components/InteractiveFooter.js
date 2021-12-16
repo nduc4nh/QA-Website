@@ -27,7 +27,7 @@ const InteractiveFooter = () => {
                     
                     
                         <div className="footer-btn-downvote footer-btn-suggest">
-                            <i class="far fa-thumbs-down footer-btn--icon"></i>
+                            <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
                             <span className="suggestions">
                                 DownVote
                             </span>
