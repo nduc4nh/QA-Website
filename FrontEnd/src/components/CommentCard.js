@@ -30,10 +30,27 @@ const CommentCard = ({ username, date, passage, upvotes, downvotes, comment }) =
                     
                 </div>
                 <div className="content-footer">
-                    <ButtonGroup bsPrefix='footer-btn-group'>
-                        <Button bsPrefix='footer-btn-upvote'><BiUpvote />{comment.upvotes}</Button>
-                        <Button bsPrefix='footer-btn-downvote'><BiDownvote />{comment.downvotes}</Button>
-                    </ButtonGroup>
+                    <div className="vote">
+                        <div className="footer-btn-upvote footer-btn-suggest">
+                            <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
+                                <i className="far fa-thumbs-up footer-btn-upvote__like-no"></i>
+                                <i className="far fa-thumbs-up footer-btn-upvote__like-yes"></i>
+                            </span>
+                            
+                            <span className="suggestions">
+                                UpVote
+                            </span>
+                        </div>
+                        <span className="number-vote">112</span>
+                        <span className="box">|</span>
+            
+                        <div className="footer-btn-downvote footer-btn-suggest">
+                            <i class="far fa-thumbs-down footer-btn--icon"></i>
+                            <span className="suggestions">
+                                DownVote
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -34,7 +34,7 @@
     margin-right: 5px;
 
 }
-.vote:hover{
+.vote:checked{
     
 }
 .box{ 
@@ -64,9 +64,7 @@
     width: 40px;
     text-align: center;
 }
-.footer-btn-upvote:hover{
-    
-}
+
 .footer-btn-upvote{
      
 }
@@ -181,4 +179,14 @@
     color: rgb(79, 79, 250);
     margin-top: 8px;
    
+}
+.footer-btn-upvote__like-yes{
+    display: none;
+    color: rgb(47, 0, 255);
+}
+.footer-btn-upvote__like-liked .footer-btn-upvote__like-yes{
+    display: inline-block;
+}
+.footer-btn-upvote__like-liked .footer-btn-upvote__like-no{
+    display: none;
 }

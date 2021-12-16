@@ -30,9 +30,9 @@ const QuestionPage = ({ question }) => {
     }
     return (
         <div className='home'>
-            <div className='header-home'>
+            {/* <div className='header-home'>
                 <NavigationBar/>
-            </div>
+            </div> */}
             <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
                 <div className='content-home'>
                     <div className='content-main-home'>
@@ -41,23 +41,32 @@ const QuestionPage = ({ question }) => {
                                 {questionTmp.title}
                             </div>
                             <div className="title-footer" style={{ alignSelf: "end" }}>
-                                <Button onClick={setInputFocus} style={{ borderRadius: 25 }}>
-                                    <FaRegEdit size="20" />Answer
-                                </Button>
+                                
+                                <div className="btn-answer">
+                                    <i class="far fa-edit btn-answer-icon"></i>
+                                    Answer
+                                </div>
                                 <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-                                    <ButtonGroup
-                                        bsPrefix=''
-                                        style={{
-                                            alignSelf: "flex-end",
-                                            justifyContent: "flex-end"
-                                        }}>
-                                        <Button bsPrefix=''>
-                                            <BiUpvote />
-                                        </Button>
-                                        <Button bsPrefix=''>
-                                            <BiDownvote />
-                                        </Button>
-                                    </ButtonGroup>
+                                    
+                                    <div className="vote">
+                                        <div className="footer-btn-upvote footer-btn-suggest">
+                                            <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
+                                                <i className="far fa-thumbs-up footer-btn-upvote__like-no"></i>
+                                                <i className="far fa-thumbs-up footer-btn-upvote__like-yes"></i>
+                                            </span>
+                                            
+                                            <span className="suggestions">
+                                                UpVote
+                                            </span>
+                                        </div>
+                            
+                                        <div className="footer-btn-downvote footer-btn-suggest">
+                                            <i class="far fa-thumbs-down footer-btn--icon"></i>
+                                            <span className="suggestions">
+                                                DownVote
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -94,9 +103,7 @@ const QuestionPage = ({ question }) => {
                             </div>
                         </div>
                     </div>
-                    <div className='content-right-side-home'>
-                        s
-                    </div>
+                    
                 </div>
             </Container>
         </div>
