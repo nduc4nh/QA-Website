@@ -2,7 +2,7 @@ import React, {Component} from "react";
 
 
 import './css/Login_Register.css'
-import 'E:/QA-Website/FrontEnd/src/assets/fontawesome-free-5.15.4-web/js/all.js'
+import '../assets/fontawesome-free-5.15.4-web/js/all.js'
 
 
 class Login extends Component{
