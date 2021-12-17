@@ -52,7 +52,9 @@ const CommentBar = ({ inputRef }) => {
                     </Form.Group>
                 </div>
                 <div className='comment-btn-container'>
-                    <Button style ={{borderRadius:"20px"}}>Add Comment</Button>
+                    <div className="btn-answer">
+                        Add comment
+                    </div>
                 </div>
             </div>
         </div>

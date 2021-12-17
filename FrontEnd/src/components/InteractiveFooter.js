@@ -13,7 +13,11 @@ const InteractiveFooter = () => {
                 <div className="footer-btn-group">
                     <div className="vote">
                         <div className="footer-btn-upvote footer-btn-suggest">
-                            <i className="far fa-thumbs-up footer-btn--icon"></i>
+                            <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
+                                <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-no"></i>
+                                <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-yes"></i>
+                            </span>
+                            
                             <span className="suggestions">
                                 UpVote
                             </span>
@@ -23,7 +27,7 @@ const InteractiveFooter = () => {
                     
                     
                         <div className="footer-btn-downvote footer-btn-suggest">
-                            <i class="far fa-thumbs-down footer-btn--icon"></i>
+                            <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
                             <span className="suggestions">
                                 DownVote
                             </span>

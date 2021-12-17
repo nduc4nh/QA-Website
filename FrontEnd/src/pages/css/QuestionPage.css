@@ -53,4 +53,21 @@
     flex-direction: row;
     width: 100%;
 }
+.btn-answer{
+    background-color: rgb(213, 77, 123);
+    border-radius: 8px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
 
+}
+.btn-answer-icon{
+    margin-right: 5px;
+}
+.btn-answer:hover{
+    background-color: rgba(213, 77, 123, 0.8);
+}
+
+.home{
+    background-color: white;
+}
