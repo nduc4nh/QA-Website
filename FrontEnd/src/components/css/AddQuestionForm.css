@@ -24,3 +24,11 @@
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.tag-input{
+    width: 100px;
+    border-color: #dddddd;
+    outline-color: #dddddd63; 
+    margin-top: 10px;
+
+}

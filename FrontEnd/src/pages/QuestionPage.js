@@ -30,9 +30,9 @@ const QuestionPage = ({ question }) => {
     }
     return (
         <div className='home'>
-            {/* <div className='header-home'>
-                <NavigationBar/>
-            </div> */}
+            <div className='header-home'>
+                <Navigationbar2/>
+            </div>
             <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
                 <div className='content-home'>
                     <div className='content-main-home'>
