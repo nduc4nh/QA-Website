@@ -1,64 +1,119 @@
-import React, {Component} from "react";
-
-
+import React, { useState, useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import './css/Login_Register.css'
 import '../assets/fontawesome-free-5.15.4-web/js/all.js'
+import { useNavigate } from 'react-router'
+import { loadUser, signIn } from '../store/action/authActions'
+import {} from "react-router"
+import { Link } from 'react-router-dom'
 
+const Login = () => {
 
-class Login extends Component{
-    constructor(props){
-        super(props);
+    const auth = useSelector((state) => state.auth)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (auth !== undefined && auth._id) {
+            navigate("/")
+        }
+    }, [])
+
+    const [criteria, setCriteria] = useState({
+        noUsername: false,
+        noPassword: false,
+        incorrectPassword: false
+    })
+
+    const [user, setUser] = useState({
+        username: "",
+        password: ""
+    })
+
+    const handleOnSubmit = (e) => {
+        e.preventDefault()
+        console.log(user);
+        let stop = false
+
+        if (user.password === "") {
+            setCriteria({ ...criteria, noPassword: true })
+            stop = true
+        }
+
+        if (user.username === "") {
+            setCriteria({ ...criteria, noUsername: true })
+            stop = true
+        }
+
+        if (stop) return
+
+        dispatch(signIn(user))
+        setUser({
+            username: "",
+            password: ""
+        })
+
+    }
+    console.log(auth, "hi");
+    if (auth._id) {
+        navigate("/",{replace:true})
     }
 
-    render(){
-        return(
-            <div className="login-background">
-                <div className="login-container">
-                    <div className="login-content">
-                        <div className="col-12 text-header">QA Website</div>
-                        <div className="col-12 text-header"> Login</div>
-                        <div className="col-12 form-group login-input">
-                            <label>Tên đăng nhập</label>
-                            <input type="text" className="form-control" placeholder="Nhập tên đăng nhập"></input>
-                        </div>
-                        <div className="col-12 form-group login-input">
-                            <label>Mật khẩu</label>
-                            <input type="password" className="form-control" placeholder="Nhập mật khẩu"></input>
-                        </div>
+    return (
+        <div className="login-background">
+            <div className="login-container">
+                <div className="login-content">
+                    <Link to="/" style={{textDecoration:"none"}}><div className="col-12 text-header" style={{cursor:"pointer"}}>QA Website</div></Link>
+                    <div className="col-12 text-header">Login</div>
 
-                        <div className="col-12 ">
-                            <button className="btn-login">Đăng nhập</button>
-                        </div>
-                        <div className="col-12">
-                            <span className="forgot-pass">Quên mật khẩu?</span>
-                        </div>
+                    <div className="col-12 form-group login-input">
+                        <label>{criteria.noUsername && <span style={{ color: "red" }}>*</span>}Username</label>
+                        <input type="text" className="form-control" placeholder="Enter your username"
+                            style={{ borderColor: criteria.noUsername ? "red" : "" }}
+                            onChange={(event) => setUser({ ...user, username: event.target.value })}
+                            onClick={() => setCriteria({ ...criteria, noUsername: false, noPassword: false })}
+                            value={user.username.trim()}></input>
+                    </div>
 
-                        <div className="col-12 text-center">
-                            <span className="text-otherLogin"> Hoặc đăng nhập với:</span>
-                        </div>
+                    <div className="col-12 form-group login-input">
+                        <label>{criteria.noPassword && <span style={{ color: "red" }}>*</span>}Password</label>
+                        <input type="password" className="form-control" placeholder="Enter your password"
+                            style={{ borderColor: criteria.noPassword ? "red" : "" }}
+                            onChange={(event) => setUser({ ...user, password: event.target.value })}
+                            onClick={() => setCriteria({ ...criteria, noUsername: false, noPassword: false })}
+                            value={user.password.trim()}></input>
+                    </div>
 
-                        <div class="auth-form__social">
-                            <a href="" class="auth-form__social-icon--fb auth-form__social-icon--general ">
-                                <i class="auth-form__social-icon fab fa-facebook-square"></i>
-                                <span class="auth-form__title">Đăng nhập với Facebook</span>
-                                
-                            </a>
-                            <a href="" class="auth-form__social-icon--gg auth-form__social-icon--general ">
-                                <i class="auth-form__social-icon fab fa-google auth-form__social-gg"></i>
-                                <span class="auth-form__title">Đăng nhập với Google</span>
-                                
-                            </a>
-                        </div>
+                    <div className="col-12 ">
+                        <button className="btn-login" onClick={handleOnSubmit}>Login</button>
+                    </div>
+                    <div className="col-12">
+                        <span className="forgot-pass">Forget password?</span>
+                    </div>
 
+                    <div className="col-12 text-center">
+                        <span className="text-otherLogin"> Or login with:</span>
+                    </div>
+
+                    <div class="auth-form__social">
+                        <a href="" class="auth-form__social-icon--fb auth-form__social-icon--general ">
+                            <i class="auth-form__social-icon fab fa-facebook-square"></i>
+                            <span class="auth-form__title">Facebook</span>
+
+                        </a>
+                        <a href="" class="auth-form__social-icon--gg auth-form__social-icon--general ">
+                            <i class="auth-form__social-icon fab fa-google auth-form__social-gg"></i>
+                            <span class="auth-form__title">Google</span>
+
+                        </a>
                     </div>
 
                 </div>
 
             </div>
-        )
-    }
+
+        </div>
+    )
 }
 
-
 export default Login
-

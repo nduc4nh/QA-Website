@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import Navigationbar2 from '../components/Navigationbar2'
 import { Container } from 'react-bootstrap'
 import UserHeaderGroup from '../components/UserHeaderGroup'
@@ -10,8 +10,11 @@ import ReputationBar from '../components/ReputationBar'
 import CustomButtonGroup from '../components/CustomButtonGroup'
 import QuestionCard from '../components/QuestionCard'
 import StretchCard from '../components/StretchCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadUser } from '../store/action/authActions'
+
 const user = {
-    name: "Username",
+    usename: "Username",
     avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
     upvotes: 100,
     downvotes: 3,
@@ -78,6 +81,13 @@ const questions = [
 ]
 
 const Profile = () => {
+    const dispatch = useDispatch()
+    useEffect(() =>{
+        dispatch(loadUser())
+    }, [dispatch])
+    
+    const user = useSelector((state) => state.auth)
+    console.log(user, "check user");
     const [option, setOption] = useState("Answered questions")
 
     const onChosenHandle = (chosen) => {
@@ -86,7 +96,7 @@ const Profile = () => {
     return (
         <div className='home' style={{ background: "white" }}>
             <div className='header-home'>
-                <Navigationbar2 />
+                <Navigationbar2 user = {user}/>
             </div>
             <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
                 <div className='content-home'>
@@ -101,7 +111,7 @@ const Profile = () => {
                                 </div>
                                 <div className="profile-bio">
                                     <div className="profile-name">
-                                        {user.name}
+                                        {user.username}
                                     </div>
                                     <div className="other-info">
                                         <ReputationBar upvotes={user.upvotes} downvotes={user.downvotes} />

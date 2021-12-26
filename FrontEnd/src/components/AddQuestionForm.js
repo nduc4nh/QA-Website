@@ -138,7 +138,6 @@ const AddQuestionForm = () => {
             </div>
 
 
-            <div className="custom-divider" />
             <div style={{ display: "flex", flexDirection: "row", alignItems: "center", marginBottom: "5px" }}>
                 <AiOutlineTag size={25} style={{ marginLeft: "10px", marginRight: "10px" }} />
                 <input
