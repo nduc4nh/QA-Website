@@ -34,3 +34,11 @@
     flex: 1;
 }
 
+.key-word{
+    margin-top: 20px;
+    border: 2px solid #dfdfdf;
+    width: 89%;
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
