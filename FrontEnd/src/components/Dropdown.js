@@ -10,7 +10,8 @@ const ListItem = styled.li`
     list-style: none;
     margin-bottom: 0.8em;
 `
-const Dropdown = ({ items }) => {
+const Dropdown = ({ items, controlVar, onChoose}) => {
+
     return (
         <div style={{
             zIndex: 1,
@@ -21,8 +22,8 @@ const Dropdown = ({ items }) => {
             boxShadow: "0px 2px 10px #d7d6d6"
         }}>
             <ListContainer>
-                {items.map((item) => (
-                    <CustomButton>
+                {items.map((item, i) => (
+                    <CustomButton onClick={onChoose(i)}>
                         <DropdownElem item = {item} />
                     </CustomButton>))}
             </ListContainer>

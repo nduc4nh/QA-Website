@@ -2,22 +2,25 @@ import React from 'react'
 import { Dropdown } from 'react-bootstrap'
 
 import FlatListItem from './FlatListItem'
+import { useNavigate } from 'react-router'
 
-const CustomFlatList = () => {
+const CustomFlatList = ({ items, controlVar }) => {
+    const navigate = useNavigate()
+    const navigateToQueryPage = (i) =>{
+        const func = () =>{
+            navigate(`/questions/category/${controlVar[i]}`)
+        }
+        return func
+    }
     return (
         <div className="FlatList-list">
-            <Dropdown.Divider />
             <div >
-                <FlatListItem name="Questions" />
-                <FlatListItem name="Tags" />
-                <FlatListItem name="Users" />
-                <FlatListItem name="Language" />
-                <FlatListItem name="Movie" />
-                <FlatListItem name="Science" />
-                <FlatListItem name="Dapibus ac facilisis in" />
-                
+                {items.map((item, i) => (<div>
+                    <FlatListItem name={item} onChoose={navigateToQueryPage(i)}/>
+                    <Dropdown.Divider />
+                </div>))}
             </div>
-            <Dropdown.Divider />
+            
         </div>
     )
 }

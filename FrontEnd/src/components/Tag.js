@@ -1,16 +1,17 @@
 import React from 'react'
 import CustomButton from './CustomButton'
-
-const Tag = ({ label,removable}) => {
-    const onDelete = () => {
-
+import { useNavigate } from 'react-router'
+const Tag = ({ label,onDelete,removable, tagId}) => {
+    const navigate = useNavigate()
+    const onHandleClick = () =>{
+        navigate(`/questions/tag/${tagId}`)
     }
     return (
-        <div style={{ position: "relative", height: "1.5rem", margin: "15px" }}>
-            <CustomButton backgroundColor={"#dddddd"} border={20}>
+        <div style={{ position: "relative", height: "1.5rem", margin: "15px"}}>
+            <CustomButton backgroundColor={"#dddddd"} border={20} onClick={onHandleClick}>
                 {label}
             </CustomButton>
-            <div onClick={onDelete} style={{
+            {removable && (<div onClick={onDelete} style={{
                 cursor: "pointer",
                 background: "white",
                 borderRadius: "0.5rem",
@@ -24,7 +25,7 @@ const Tag = ({ label,removable}) => {
                 alignItems: "center"
             }}>
                 <div style={{ fontSize: "0.8rem" }}>x</div>
-            </div>
+            </div>)}
         </div>
     )
 }

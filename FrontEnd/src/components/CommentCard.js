@@ -41,7 +41,7 @@ const CommentCard = ({ username, date, passage, upvotes, downvotes, comment }) =
                                 UpVote
                             </span>
                         </div>
-                        <span className="number-vote">112</span>
+                        <span className="number-vote">{comment.upvotes}</span>
                         <span className="box">|</span>
             
                         <div className="footer-btn-downvote footer-btn-suggest">
@@ -50,6 +50,7 @@ const CommentCard = ({ username, date, passage, upvotes, downvotes, comment }) =
                                 DownVote
                             </span>
                         </div>
+                        <span className="number-vote">{comment.downvotes}</span>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ import './css/InteractiveFooter.css'
 import { ButtonGroup, Button } from 'react-bootstrap'
 
 
-const InteractiveFooter = () => {
+const InteractiveFooter = ({like, dislike}) => {
     return (
         <div className="footer-container">
             <div className="footer-left-content">
@@ -22,7 +22,7 @@ const InteractiveFooter = () => {
                                 UpVote
                             </span>
                         </div>
-                        <span className="number-vote">112</span>
+                        <span className="number-vote">{like}</span>
                         <span className="box">|</span>
                     
                     
@@ -32,6 +32,7 @@ const InteractiveFooter = () => {
                                 DownVote
                             </span>
                         </div>
+                        <span className="number-vote">{dislike}</span>
                     </div>
 
                     <div className="footer-btn-comment footer-btn-suggest">

@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { Container, Button, Form } from 'react-bootstrap'
 import './css/CommentBar.css'
 
-const CommentBar = ({ inputRef }) => {
+const CommentBar = ({ inputRef, submit}) => {
     const [commentState, setCommentState] = useState({
         value: '',
         rows: 1,
@@ -31,6 +31,10 @@ const CommentBar = ({ inputRef }) => {
         })
 
     }
+    const onHandleSubmit = () =>{
+        submit(commentState.value)
+        setCommentState({...commentState, value:""})
+    }
 
     return (
         <div className='comment-container'>
@@ -52,7 +56,7 @@ const CommentBar = ({ inputRef }) => {
                     </Form.Group>
                 </div>
                 <div className='comment-btn-container'>
-                    <div className="btn-answer">
+                    <div className="btn-answer" onClick={onHandleSubmit}>
                         Add comment
                     </div>
                 </div>

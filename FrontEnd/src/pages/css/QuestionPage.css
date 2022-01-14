@@ -5,11 +5,12 @@
 }
 
 .content-body-container{
+position: relative;
 
 }
 
 .content-question-container{
-    
+    position: relative;
 }
 
 .poster-container{

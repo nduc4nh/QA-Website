@@ -1,0 +1,36 @@
+.intro-box{
+    margin-top: 50px;
+    padding-right: 100px;
+}
+
+.intro-content{
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.intro-icon{
+
+}
+
+.intro-text{
+    padding-left: 10px;
+    flex: 1;
+    font-weight: bold;
+    font-size: 1.7rem;
+    color: #dddddd;
+}
+
+.intro-query-name{
+    display: flex;
+    margin-left: 30px;
+    align-items: center;
+    font-style: italic;
+    font-size: 1.7rem;
+    
+}
+
+.intro-description{
+    color: #757575;
+
+}

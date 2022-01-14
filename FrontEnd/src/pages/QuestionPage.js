@@ -1,65 +1,258 @@
-import NavigationBar from '../components/NavigationBar'
+import React, { useEffect, useRef, useState } from 'react'
 import { Container, Dropdown, Button, ButtonGroup, Image, Card } from 'react-bootstrap'
 import './css/Home.css'
 import './css/QuestionPage.css'
-import { BiUpvote, BiDownvote } from 'react-icons/bi'
-import { FaRegEdit } from 'react-icons/fa'
 import CommentBar from '../components/CommentBar'
 import CommentBox from '../components/CommentBox'
-import { useRef } from 'react'
+
+import { BsPencilFill } from 'react-icons/bs'
 import Navigationbar2 from '../components/Navigationbar2'
+import { useDispatch, useSelector } from 'react-redux'
+import { loadUser } from '../store/action/authActions'
+import { useSearchParams } from 'react-router-dom'
+import axios from 'axios'
+import Tag from '../components/Tag'
+import { io } from 'socket.io-client'
+import { backend, socketServer } from "../store/endPoints"
+import CustomButton from '../components/CustomButton'
+import Popup from '../components/Popup'
+import AddQuestionForm from '../components/AddQuestionForm'
+import MemberAccessWarning from '../components/MemberAccessWarning'
+import { useNavigate } from 'react-router'
+import { imageEnpoints } from '../store/endPoints'
+import { dataURLtoFile } from '../utils/StringProcessing'
 
 const useFocus = () => {
+
     const htmlElRef = useRef(null)
     const setFocus = () => { htmlElRef.current && htmlElRef.current.focus() }
 
     return [htmlElRef, setFocus]
 }
 
-const QuestionPage = ({ question }) => {
+const QuestionPage = props => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const [warning, setWarning] = useState(false)
+    const [question, setQuestion] = useState()
+    const [tags, setTags] = useState([])
+    const [socket, setSocket] = useState(null)
+    const [comment, setComment] = useState([])
+    const [edit, setEdit] = useState(false)
+    const [poster, setPoster] = useState()
+    const [postImage, setPostImage] = useState()
+    const [searchParams, setSearchParams] = useSearchParams()
+    const questionId = searchParams.get("questionId")
+
+    const getPostImage = () => {
+
+        axios
+            .get(`${imageEnpoints}image/post/get/${questionId}`)
+            .then(res => {
+                let imgbs4 = res.data.image["image"]
+                console.log(res)
+                if (!imgbs4) return;
+
+                if (imgbs4 === "-1") return;
+                setPostImage(URL.createObjectURL(
+                    dataURLtoFile(imgbs4)
+                ))
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+
+    }
+
+    useEffect(() => {
+        setSocket(io(socketServer))
+    }, [])
+
+    useEffect(() => {
+        dispatch(loadUser())
+    }, [dispatch])
+
+    const user = useSelector((state) => state.auth)
+    console.log(user, "check user");
+    
     const [inputRef, setInputFocus] = useFocus()
     const questionTmp = {
         title: "Question title",
         content: "Question content, question content",
-        user: {
+        poster: {
             name: "poster",
             avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
 
         },
         date: "October 31"
     }
+
+    console.log(questionId)
+
+    useEffect(() => {
+
+        axios
+            .get(backend + "article/comments/" + questionId)
+            .then(res => {
+                console.log(res.data);
+                let questionRes = res.data[0]
+                let date = new Date(questionRes.createdAt * 1000)
+
+                let newQuestion = {
+                    ...question,
+                    title: questionRes.title,
+                    content: questionRes.content,
+                    date: date.toLocaleString('en-us', { day: 'numeric', month: 'short' }),
+                    poster: {
+                        name: "poster",
+                        avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png"
+                    },
+                    comments: questionRes.comments,
+                    like: questionRes.like,
+                    dislike: questionRes.dislike,
+                    tags: questionRes.tags
+                }
+                axios
+                    .get(backend + "user/" + questionRes.createdBy)
+                    .then(response => {
+                        let poster = response.data
+                        setPoster({
+                            _id: poster._id,
+                            name: poster.username,
+                            avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png"
+                        })
+                    })
+                let apis = []
+                newQuestion.tags.forEach(tag => {
+                    apis = [...apis, axios.get(backend + "tag/" + tag)]
+                });
+                axios
+                    .all(apis)
+                    .then(axios.spread((...responses) => {
+                        let tmpTags = []
+                        responses.forEach((response, idx) => {
+                            tmpTags = [...tmpTags, response.data.name]
+                        })
+                        setTags(tmpTags)
+                    }))
+                console.log(newQuestion, "load question")
+                setQuestion(newQuestion)
+            })
+    }, [])
+
+    useEffect(() => {
+        getPostImage()
+    }, [question])
+
+    console.log(poster, ">>>>")
+
+    useEffect(() => {
+        if (socket) {
+            socket.emit("newCommentPost", {
+                userId: user._id,
+                username: user.username,
+                avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png",
+                postId: questionId
+
+            })
+        }
+    }, [socket])
+
+
+    const onHandlePushComment = (cmt) => {
+        if (user._id == null) {
+            setWarning(true)
+            return
+        }
+        let postTime = Math.floor(new Date().getTime() / 1000.0)
+        socket.emit("pushComment", {
+            message: cmt,
+            order: postTime,
+            commenterId: user._id
+        })
+
+        axios.post(backend + "comment", {
+            articleId: questionId,
+            content: cmt
+        }, {
+            headers: {
+                "x-access-token": localStorage.getItem("token")
+            }
+        })
+        .then(res =>
+            console.log(res)
+        )
+        .catch((e)=>{
+            console.log(e)
+        })
+
+        socket.emit("notifyUser", {
+            senderId: user._id,
+            receiverId: poster._id,
+            title: question.title
+        })
+    }
+
+    const navigatePostWithTag = (tagId) => {
+        navigate(`/questions?search='${tagId}'&kind='tags'`)
+    }
+
     return (
         <div className='home'>
+            {edit &&
+                <Popup handleClose={() => setEdit(false)} title={"Update Question"} >
+                    <div style={{ width: "100%", height: "100%", paddingRight: "15px" }}>
+                        <AddQuestionForm edit={true} postTitle={question.title} content={question.content} tags={tags} />
+                    </div>
+                </Popup>}
+            {warning &&
+                <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
+                    <MemberAccessWarning></MemberAccessWarning>
+                </Popup>}
+
             <div className='header-home'>
-                <Navigationbar2/>
+                <Navigationbar2 user={user} />
             </div>
-            <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
-                <div className='content-home'>
+            <Container style={{ paddingLeft: "100px", paddingRight: "100px", paddingTop: "50px" }}>
+                {question && (<div className='content-home'>
                     <div className='content-main-home'>
-                        <div className="content-header-container" style={{ height: 100 }}>
-                            <div style={{ fontSize: 40, fontWeight: "bold" }}>
-                                {questionTmp.title}
+                        <div className="content-header-container" style={{ minHeight: 100 }}>
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                <div style={{ fontSize: 40, fontWeight: "bold" }}>
+                                    {question.title}
+                                </div>
+
+                                {(poster && poster._id === user._id) ?
+                                    <div style={{ margin: "5px" }}>
+                                        <CustomButton border={"20px"} onClick={() => setEdit(!edit)}>
+                                            <BsPencilFill color="grey" />
+                                        </CustomButton>
+                                    </div>
+                                    :
+                                    <></>
+                                }
                             </div>
                             <div className="title-footer" style={{ alignSelf: "end" }}>
-                                
+
                                 <div className="btn-answer">
                                     <i class="far fa-edit btn-answer-icon"></i>
                                     Answer
                                 </div>
                                 <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-                                    
+
                                     <div className="vote">
+                                        {question.like}
                                         <div className="footer-btn-upvote footer-btn-suggest">
                                             <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
                                                 <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-no"></i>
                                                 <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-yes"></i>
                                             </span>
-                                            
+
                                             <span className="suggestions">
                                                 UpVote
                                             </span>
                                         </div>
-                            
+                                        {question.dislike}
                                         <div className="footer-btn-downvote footer-btn-suggest">
                                             <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
                                             <span className="suggestions">
@@ -70,41 +263,54 @@ const QuestionPage = ({ question }) => {
                                 </div>
                             </div>
                         </div>
+                        <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "10px" }}>
+                            {tags && tags.map((tag, idx) =>
+                                <div style={{ display: "flex", flexDirection: "row" }}>
+                                    <Tag label={tag} removable={false} tagId={question.tags[idx]} />
+                                </div>
+                            )}
+                        </div>
                         <Dropdown.Divider />
 
                         <div className="content-body-container">
                             <div className="content-question-container">
                                 <div className="poster-container">
-                                    <Image src={questionTmp.user.avatar} roundedCircle />
+                                    <Image src={poster && poster.avatar} roundedCircle />
                                     <div className="poster-info-holder">
                                         <div className="poster-name-holder">
                                             <div style={{ font: "bold", fontSize: 20 }}>
-                                                {questionTmp.user.name}
+                                                {poster && poster.name}
                                             </div>
                                         </div>
                                         <div className="poster-date-holder">
                                             <div style={{ fontSize: 15, color: "grey" }}>
-                                                {questionTmp.date}
+                                                {question.date}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <Container>
+                                    {postImage && <img src={postImage} />}
                                     <Card.Body>
-                                        {questionTmp.content}
+                                        {question.content}
                                     </Card.Body>
                                 </Container>
                             </div>
                             <Dropdown.Divider />
+                            <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                                {'' + question.comments.length + (question.comments.length <= 1 ? " Answer" : " Answers")}
+                            </div>
+                            <Dropdown.Divider />
                             <div className="content-answer-container">
-                                <CommentBar inputRef = {inputRef}/>
-                                <CommentBox />
+                                {poster && <CommentBar inputRef={inputRef} submit={onHandlePushComment} />}
+                                <CommentBox comments={question.comments} socket={socket} />
                             </div>
                         </div>
                     </div>
-                    
-                </div>
+                    <div className='content-right-side-home' style={{ marginTop: "100px" }}>
+                    </div>
+                </div>)}
             </Container>
         </div>
     )

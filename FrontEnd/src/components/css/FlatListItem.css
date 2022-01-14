@@ -1,6 +1,7 @@
 .FlatList-list{
     position: fixed;
     top: 83px;
+    min-width: 150px;
 }
 
 .container-item{

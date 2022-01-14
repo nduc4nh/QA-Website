@@ -1,4 +1,4 @@
-import { React, useState } from 'react'
+import { React, useState, useEffect } from 'react'
 import './css/navigationbar.css'
 import SearchBar from './SearchBar'
 import logo from '../assets/logo2.png'
@@ -16,7 +16,8 @@ import Popup from './Popup'
 import CommentBar from './CommentBar'
 import AddQuestionForm from './AddQuestionForm'
 import { useDispatch, useSelector } from 'react-redux'
-import { signOut } from '../store/action/authActions'
+import { getUserImage, signOut } from '../store/action/authActions'
+import { getImage, convertBs64toBlob } from '../utils/imageProcessing'
 const Brand = styled.h1`
     color: #d54d7b; 
     font-family: "Great Vibes", cursive; 
@@ -46,6 +47,7 @@ const items = [
 ]
 const Navigationbar2 = ({ user }) => {
     let navigate = useNavigate();
+    
     const dispatch = useDispatch()
     const [isAddQuestion, setIsAddQuestion] = useState(false)
     const handleAddQuestion = () => {
@@ -64,6 +66,7 @@ const Navigationbar2 = ({ user }) => {
     const onHandleRegister = () => {
         navigate("/register")
     }
+    const userImage = getImage()
 
     const popUpControl = () => {
         if (!isAddQuestion) return <></>
@@ -130,7 +133,7 @@ const Navigationbar2 = ({ user }) => {
                     </div>
                     <div style={{ marginLeft: "20px", marginRight: "10px", height: "65px" }}>
                         {user._id ? <CustomButton border="10px" onClick={() => (navigate("/profile/" + user._id, { replace: true }))}>
-                            <RoundedImage source={userImg} />
+                            <RoundedImage source={userImage?convertBs64toBlob(userImage):userImg} />
                             <div style={{ marginLeft: "10px" }}>
                                 {user.username}
                             </div>
@@ -163,7 +166,6 @@ const Navigationbar2 = ({ user }) => {
                         </div>
                     }
                 </div>
-
             </div>
             {popUpControl()}
         </div>
