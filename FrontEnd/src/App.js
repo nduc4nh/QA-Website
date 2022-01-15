@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import QuestionPage from './pages/QuestionPage';
 import Profile from './pages/Profile';
 import QueryPage from './pages/QueryPage';
+import SearchResultPage from './pages/SearchResultPage';
 const App = () => {
   /*<Home/>*/
   return (
@@ -19,6 +20,8 @@ const App = () => {
         <Route element={<Register />} path="/register/"></Route>
         <Route element={<Profile />} path="/profile/:id"></Route>
         <Route element={<QueryPage />} path="/questions/:kind/:search" exact></Route>
+        <Route element={<SearchResultPage />} path="/search/:query"></Route>
+        <Route element={<SearchResultPage />} path="/search/"></Route>
       </Routes>
     </Router>
   );

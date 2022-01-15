@@ -19,6 +19,7 @@
 
 .content-left-side-home{
     flex: 1;
+    z-index: 0;
 }
 
 .content-main-home{
@@ -28,9 +29,13 @@
     margin-top: 50px;
     flex: 4;
     padding-left: 40px;
+    height: 100%;
 }
 
 .content-right-side-home{
     flex: 1;
 }
 
+.footer{
+    z-index: 1;
+}

@@ -113,7 +113,9 @@ const Navigationbar2 = ({ user }) => {
     }
 
     return (
-        <div>
+        <div style ={{
+            postion:"relative"
+        }}>
             <div className='container-nav'>
                 <div className='logo'>
                     <ImageWrapper source={logo} width={50} height={50} />

@@ -21,6 +21,7 @@ import MemberAccessWarning from '../components/MemberAccessWarning'
 import { useNavigate } from 'react-router'
 import { imageEnpoints } from '../store/endPoints'
 import { dataURLtoFile } from '../utils/StringProcessing'
+import Footer from '../components/Footer'
 
 const useFocus = () => {
 
@@ -43,6 +44,7 @@ const QuestionPage = props => {
     const [postImage, setPostImage] = useState()
     const [searchParams, setSearchParams] = useSearchParams()
     const questionId = searchParams.get("questionId")
+    const [category,setCategory] = useState()
 
     const getPostImage = () => {
 
@@ -100,6 +102,7 @@ const QuestionPage = props => {
 
                 let newQuestion = {
                     ...question,
+                    _id:questionRes._id,
                     title: questionRes.title,
                     content: questionRes.content,
                     date: date.toLocaleString('en-us', { day: 'numeric', month: 'short' }),
@@ -136,6 +139,14 @@ const QuestionPage = props => {
                         setTags(tmpTags)
                     }))
                 console.log(newQuestion, "load question")
+                axios
+                .get(`${backend}category/${questionRes.categories[0]}`)
+                .then(res => {
+                    setCategory(res.data)
+                })
+                .catch((e) =>{
+                    console.log(e)
+                })
                 setQuestion(newQuestion)
             })
     }, [])
@@ -202,7 +213,7 @@ const QuestionPage = props => {
             {edit &&
                 <Popup handleClose={() => setEdit(false)} title={"Update Question"} >
                     <div style={{ width: "100%", height: "100%", paddingRight: "15px" }}>
-                        <AddQuestionForm edit={true} postTitle={question.title} content={question.content} tags={tags} />
+                        <AddQuestionForm edit={true} postTitle={question.title} content={question.content} tags={tags} category={category} idx={question._id}/>
                     </div>
                 </Popup>}
             {warning &&
@@ -312,6 +323,7 @@ const QuestionPage = props => {
                     </div>
                 </div>)}
             </Container>
+            <Footer/>
         </div>
     )
 }

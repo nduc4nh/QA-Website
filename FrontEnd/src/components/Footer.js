@@ -12,9 +12,9 @@ const Footer = () => {
             display: 'flex',
             flexDirection: 'row',
             width: "100%",
-            height: "300px",
-            bottom: "0",
-            marginTop: "100px",
+            height: "350px",
+            bottom: "0px",
+            marginTop: "200px",
             boxShadow: "0px 2px 10px #d7d6d6",
             borderColor: "#dddddd",
             border: "1px",
@@ -23,7 +23,7 @@ const Footer = () => {
             borderLeft: "0px",
             borderBottom: "0px",
             paddingLeft: "100px",
-            paddingTop: "50px"
+            paddingTop: "50px",
         }}>
             <div style={{
                 display: 'flex',

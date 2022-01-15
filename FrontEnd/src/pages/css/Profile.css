@@ -52,7 +52,7 @@
 
 .history-content{
     display: flex;
-    overflow-x: scroll;
+    overflow-y: scroll;
     height: 400px;
     width: 100%;
     background-color: #dddddd;

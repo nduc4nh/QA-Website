@@ -1,9 +1,9 @@
 .stretch-card-container{
     margin-top: 20px;
     position: relative;
-    display: flex;
     width: 200px;
     padding:10px; 
+    height:auto;
 }
 
 .tick{

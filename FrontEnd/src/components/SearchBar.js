@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './css/SearchBar.css'
 import styled from 'styled-components'
 import { FaSearch } from 'react-icons/fa'
+import Dropdown from './Dropdown';
+import axios from 'axios';
+import { getSearch } from '../store/action/searchAction';
+import { backend } from '../store/endPoints';
+import { useNavigate } from 'react-router';
 
 const SearchInput = styled.input`
     width: 100%;
@@ -29,10 +34,99 @@ const SearchInput = styled.input`
 `;
 
 const SearchBar = () => {
+    const [query, setQuery] = useState()
+    const [results, setResults] = useState(["", ""])
+    const navigate = useNavigate()
+
+    // const getResult = () =>{
+    //     axios
+    //     .get(`${backend}`)
+    // }
+    const getSearchByTag = (query) => {
+        axios
+            .get(`${backend}tag?slug=${query}`)
+            .then(res => {
+                if (res.data.data.length > 0) {
+                    axios
+                        .get(`${backend}article?tags=${res.data.data[0]._id}`)
+                        .then(res => {
+                            console.log(res.data, "tag")
+                            let tmp = [...results]
+                            tmp[0] = res.data.data
+                            setResults(tmp)
+                        })
+                        .catch((e) => {
+                            console.log(e)
+                        })
+                }
+            })
+    }
+
+    const getSearchByTitle = (query) => {
+        axios
+            .get(`${backend}article?slug=${query}`)
+            .then(res => {
+                console.log(res.data, "Title")
+                let tmp = [...results]
+                tmp[1] = res.data.data
+                setResults(tmp)
+            })
+            .catch((e) => {
+                console.log(e)
+            })
+    }
+
+    const onHandleChange = (e) => {
+        setQuery(e.target.value)
+        getSearchByTag(e.target.value)
+        getSearchByTitle(e.target.value)
+    }
+
+    const transform = (resultsArray) => {
+        console.log(resultsArray)
+        let res = []
+        resultsArray.forEach((e, i) => {
+            res = res.concat(e)
+        })
+
+        let finalRes = []
+        res.forEach((e, i) => {
+            if (!finalRes.some((item) => (e._id === item._id))) {
+                let tmpE = { ...e, content: e.title }
+                finalRes = [...finalRes, tmpE]
+            }
+
+        })
+        console.log(finalRes, "tranformed")
+
+        return finalRes
+    }
+    const handleOnChoose = (i) => {
+        const func = () => {
+            navigate(`/question?questionId=${transform(results)[i]._id}`)
+        }
+        return func
+    }
+
+    const handleOnSubmit = () =>{
+        if (query) navigate(`/search?query=${query}`)
+    }
+
     return (
-        <div className='search-container'>
-            <i> <FaSearch color="#bebebe"/></i>
-            <SearchInput placeholder="Search..." />
+        <div>
+            <div className='search-container'>
+                <i> <FaSearch color="#bebebe" /></i>
+                <form onSubmit={handleOnSubmit}>
+                    <SearchInput placeholder="Search..." value={query} onChange={onHandleChange}
+                    />
+                </form>
+            </div>
+            <div style={{
+                position: "absolute",
+                width: "400px"
+            }}>
+                {query && <Dropdown items={transform(results).slice(0,5)} onChoose={handleOnChoose} />}
+            </div>
         </div>
     )
 }

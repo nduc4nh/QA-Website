@@ -13,6 +13,7 @@ import { useParams } from 'react-router'
 import axios from 'axios'
 import { backend } from '../store/endPoints'
 import { getOffsetTimeString } from '../utils/TimeConverter'
+import Footer from '../components/Footer'
 
 const QueryPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -141,6 +142,7 @@ const QueryPage = () => {
                     </div>
                 </div>
             </Container>
+            <Footer/>
         </div>
     )
 }

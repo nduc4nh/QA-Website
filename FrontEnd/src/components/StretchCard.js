@@ -31,13 +31,15 @@ const StretchCard = ({ question }) => {
                 {question.done?<BsCheck size={tickSize+10} color='green'/>:<FaQuestion size={tickSize} color = {"#d54d7b"}/>}
             </div>
             <div style={{
-                position: "absolute",
-                width: "90%",
+                
+                width: "150px",
                 top: pos,
                 paddingTop: 20,
                 paddingBottom: 50,
+                height:"auto",
                 boxShadow: "0px 2px 10px #d7d6d6",
                 background: "white",
+                paddingRight:"10px"
 
             }}
                 onMouseEnter={onEnterHandle}

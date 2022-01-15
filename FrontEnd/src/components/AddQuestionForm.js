@@ -20,13 +20,13 @@ max-height:200px;
 width:100%;
 overflow-y: scroll;
 `
-const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
+const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx }) => {
     const navigate = useNavigate()
     const inputRef = useRef();
     const [show, setShow] = useState(false)
     const [categoryList, setCategoryList] = useState()
-    const [chosenCategory, setChosenCategory] = useState()
-
+    const [chosenCategory, setChosenCategory] = useState(category)
+    console.log(category, "edit")
     if (!postTitle) postTitle = ''
     if (!content) content = ''
     if (!tags) tags = []
@@ -45,7 +45,7 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
     const [contents, setContents] = useState([{ type: "text" }])
     const [tagList, setTagList] = useState(tags)
     const [tagContent, setTagContent] = useState("")
-    const [selectedFile, setSelectedFile] = useState({ image: null,file: null })
+    const [selectedFile, setSelectedFile] = useState({ image: null, file: null })
 
     const getAllCategory = () => {
         axios
@@ -101,7 +101,9 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
     }
 
     const onAddQuestion = async () => {
+
         let content = commentState.map(item => item.value).join(" ")
+        console.log(content, title, chosenCategory)
         if (content.trim() === "") return
         if (title.trim() === "") return
         if (chosenCategory === undefined) return
@@ -112,9 +114,9 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
             tags: tagList
         }
         let imgbs64;
-        if (selectedFile.file) imgbs64 = await toBase64(selectedFile.file) 
+        if (selectedFile.file) imgbs64 = await toBase64(selectedFile.file)
 
-        console.log(article);
+        console.log(article, "before");
 
         axios
             .post(`${backend}article`, article, {
@@ -125,15 +127,15 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
             .then(res => {
                 console.log(res);
                 let newPostId = res.data._id
-                if (selectedFile.file){
+                if (selectedFile.file) {
                     axios
-                    .put(`${imageEnpoints}image/post/put/${newPostId}`,{ image: `${imgbs64}` })
-                    .then(res =>{
-                        console.log(res)
-                    })
-                    .catch((e) =>{
-                        console.log(e)
-                    })
+                        .put(`${imageEnpoints}image/post/put/${newPostId}`, { image: `${imgbs64}` })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch((e) => {
+                            console.log(e)
+                        })
                 }
                 navigate(`/question?questionId=${newPostId}`)
             })
@@ -141,7 +143,47 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
                 console.log(err);
             })
     }
-    const onUpdateQuestion = () => {
+    const onUpdateQuestion = async () => {
+        let content = commentState.map(item => item.value).join(" ")
+        console.log(content, title, chosenCategory)
+        if (content.trim() === "") return
+        if (title.trim() === "") return
+        if (chosenCategory === undefined) return
+        let article = {
+            title: title,
+            content: content,
+            categories: [chosenCategory._id],
+            tags: tagList
+        }
+        let imgbs64;
+        if (selectedFile.file) imgbs64 = await toBase64(selectedFile.file)
+
+        console.log(article, "before edit");
+
+        axios
+            .put(`${backend}article/${idx}`, article, {
+                headers: {
+                    "x-access-token": localStorage.getItem("token")
+                }
+            })
+            .then(res => {
+                console.log(res);
+                let newPostId = res.data._id
+                if (selectedFile.file) {
+                    axios
+                        .put(`${imageEnpoints}image/post/put/${newPostId}`, { image: `${imgbs64}` })
+                        .then(res => {
+                            console.log(res)
+                        })
+                        .catch((e) => {
+                            console.log(e)
+                        })
+                }
+                navigate(`/question?questionId=${newPostId}`)
+            })
+            .catch(err => {
+                console.log(err);
+            })
 
     }
 
@@ -151,9 +193,9 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
             let img = event.target.files[0]
             setSelectedFile({
                 image: URL.createObjectURL(img),
-                file:img
+                file: img
             })
-            
+
             console.log(selectedFile);
         }
     }
@@ -225,10 +267,10 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit }) => {
                     placeholder={"Ask your question here .."}
                     rows={commentState[i].rows}
                     style={{
-                        overflowY:commentState[i].rows >= 10?"scroll":"auto",
-                        maxHeight:"200px"
+                        overflowY: commentState[i].rows >= 10 ? "scroll" : "auto",
+                        maxHeight: "200px"
                     }}
-                    
+
                 /> : <></>))}
 
             </div>
