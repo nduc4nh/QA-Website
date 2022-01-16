@@ -11,7 +11,8 @@ import axios from 'axios'
 import { imageEnpoints } from '../store/endPoints'
 
 
-const QuestionCard = ({ question }) => {
+const QuestionCard = ({ question,reaction, user, warningFunc}) => {
+    console.log(reaction)
     const trunc = truncate(question.content)
     const path = `/question?questionId=${question._id}`
     const [postImage, setPostImage] = useState()
@@ -68,7 +69,7 @@ const QuestionCard = ({ question }) => {
                 </span>
             </Card.Body>
             <div style={{ flex: 1 }}>
-                <InteractiveFooter like={question.like} dislike={question.dislike} />
+                <InteractiveFooter like={reaction.like} dislike={reaction.dislike} questionId={question._id} user ={user} warnFunc = {warningFunc}/>
             </div>
         </Card>
     )

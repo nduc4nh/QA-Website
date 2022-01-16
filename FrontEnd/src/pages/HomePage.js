@@ -11,11 +11,14 @@ import axios from 'axios'
 import { backend } from "../store/endPoints"
 import { getOffsetTimeString } from '../utils/TimeConverter'
 import Footer from '../components/Footer'
-
+import Popup from '../components/Popup'
+import MemberAccessWarning from '../components/MemberAccessWarning'
 const HomePage = () => {
     const dispatch = useDispatch()
     const [questions, setQuestions] = useState()
     const [categories, setCategories] = useState()
+    const [listLikes, setListLikes] = useState()
+    const [warning, setWarning] = useState(false)
 
     useEffect(() => {
         dispatch(loadUser())
@@ -28,7 +31,9 @@ const HomePage = () => {
         axios
             .get(`${backend}article?page=1`)
             .then(res => {
-                console.log(res.data.data, "get all post")
+                console.log(res.data, "get all post")
+                console.log(res.data.listLike)
+                setListLikes(res.data.listLike)
                 let posts = res.data.data
                 posts = posts.map((post) => {
                     let tmpost = { ...post }
@@ -117,6 +122,10 @@ const HomePage = () => {
     // ]
     return (
         <div className='home'>
+            {warning &&
+                <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
+                    <MemberAccessWarning></MemberAccessWarning>
+                </Popup>}
             <div className='header-home'>
                 <Navigationbar2 user={user} />
             </div>
@@ -130,7 +139,8 @@ const HomePage = () => {
                             />}
                     </div>
                     <div className='content-main-home'>
-                        {questions.map((item) => (<QuestionCard question={item} />))}
+                        {console.log(user, "testst")}
+                        {questions && questions.map((item, i) => (<QuestionCard question={item} reaction={listLikes[i]} user={user} warningFunc = {setWarning}/>))}
                     </div>
                     <div className='content-right-side-home'>
                         s

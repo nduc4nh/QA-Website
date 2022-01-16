@@ -1,4 +1,5 @@
 .home{
+    display: flex;
     min-height: 1080px;
     width: 100%;
     flex-direction: column;

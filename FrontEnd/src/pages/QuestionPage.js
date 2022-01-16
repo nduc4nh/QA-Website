@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router'
 import { imageEnpoints } from '../store/endPoints'
 import { dataURLtoFile } from '../utils/StringProcessing'
 import Footer from '../components/Footer'
+import { lightPrimaryColor, primaryColor } from '../constant/color'
 
 const useFocus = () => {
 
@@ -44,7 +45,11 @@ const QuestionPage = props => {
     const [postImage, setPostImage] = useState()
     const [searchParams, setSearchParams] = useSearchParams()
     const questionId = searchParams.get("questionId")
-    const [category,setCategory] = useState()
+    const [category, setCategory] = useState()
+
+    const [dislikes,setDislikes] = useState(0)
+    const [likes,setLikes] = useState(0)
+    const [currentlyLike, setCurrentlyLike] = useState(0)
 
     const getPostImage = () => {
 
@@ -76,7 +81,7 @@ const QuestionPage = props => {
 
     const user = useSelector((state) => state.auth)
     console.log(user, "check user");
-    
+
     const [inputRef, setInputFocus] = useFocus()
     const questionTmp = {
         title: "Question title",
@@ -97,12 +102,14 @@ const QuestionPage = props => {
             .get(backend + "article/comments/" + questionId)
             .then(res => {
                 console.log(res.data);
+                console.log(res, "checklikes")
                 let questionRes = res.data[0]
+                console.log(questionRes,"123")
                 let date = new Date(questionRes.createdAt * 1000)
 
                 let newQuestion = {
                     ...question,
-                    _id:questionRes._id,
+                    _id: questionRes._id,
                     title: questionRes.title,
                     content: questionRes.content,
                     date: date.toLocaleString('en-us', { day: 'numeric', month: 'short' }),
@@ -111,10 +118,16 @@ const QuestionPage = props => {
                         avatar: "http://ativn.edu.vn/wp-content/uploads/2018/03/user.png"
                     },
                     comments: questionRes.comments,
-                    like: questionRes.like,
-                    dislike: questionRes.dislike,
+                    like: 0,
+                    dislike: 0,
                     tags: questionRes.tags
                 }
+
+                setLikes(questionRes.like)
+                setDislikes(questionRes.dislike)
+                if (questionRes.like.some((item) => item._id === user._id)) setCurrentlyLike(1)
+                if (questionRes.dislike.some((item) => item._id === user._id)) setCurrentlyLike(-1)
+
                 axios
                     .get(backend + "user/" + questionRes.createdBy)
                     .then(response => {
@@ -140,16 +153,16 @@ const QuestionPage = props => {
                     }))
                 console.log(newQuestion, "load question")
                 axios
-                .get(`${backend}category/${questionRes.categories[0]}`)
-                .then(res => {
-                    setCategory(res.data)
-                })
-                .catch((e) =>{
-                    console.log(e)
-                })
+                    .get(`${backend}category/${questionRes.categories[0]}`)
+                    .then(res => {
+                        setCategory(res.data)
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    })
                 setQuestion(newQuestion)
             })
-    }, [])
+    }, [edit])
 
     useEffect(() => {
         getPostImage()
@@ -190,12 +203,12 @@ const QuestionPage = props => {
                 "x-access-token": localStorage.getItem("token")
             }
         })
-        .then(res =>
-            console.log(res)
-        )
-        .catch((e)=>{
-            console.log(e)
-        })
+            .then(res =>
+                console.log(res)
+            )
+            .catch((e) => {
+                console.log(e)
+            })
 
         socket.emit("notifyUser", {
             senderId: user._id,
@@ -208,12 +221,55 @@ const QuestionPage = props => {
         navigate(`/questions?search='${tagId}'&kind='tags'`)
     }
 
+    const onHandleLike = () => {
+        axios
+            .put(`${backend}like/like/${questionId}`, {}, {
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                }
+            })
+            .then(res => {
+                setLikes(prev=>[...prev,user])
+                setDislikes(prev=>prev.filter((item)=>(item._id !== user._id)))
+                console.log(res, "like")
+            })
+            .then((e) => {
+                console.log(e)
+            })
+    }
+
+    const onHandleDislike = () => {
+        axios
+            .put(`${backend}like/dislike/${questionId}`, {}, {
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                }
+            })
+            .then(res => {
+                setDislikes(prev=>[...prev,user])
+                setLikes(prev=>prev.filter((item)=>(item._id !== user._id)))
+                console.log(res, "dislike")
+            })
+            .then((e) => {
+                console.log(e)
+            })
+    }
+
+    const likeByMe = (like) =>{
+        return like.some(item=>item._id === user._id)
+    }
+    const disLikeByMe = (dislike) =>{
+        return dislike.some(item => item._id === user._id)
+    }
+
+  
+
     return (
         <div className='home'>
             {edit &&
                 <Popup handleClose={() => setEdit(false)} title={"Update Question"} >
                     <div style={{ width: "100%", height: "100%", paddingRight: "15px" }}>
-                        <AddQuestionForm edit={true} postTitle={question.title} content={question.content} tags={tags} category={category} idx={question._id}/>
+                        <AddQuestionForm onClose={setEdit} edit={true} postTitle={question.title} content={question.content} tags={tags} category={category} idx={question._id} />
                     </div>
                 </Popup>}
             {warning &&
@@ -252,8 +308,12 @@ const QuestionPage = props => {
                                 <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
 
                                     <div className="vote">
-                                        {question.like}
-                                        <div className="footer-btn-upvote footer-btn-suggest">
+                                        {likes.length}
+                                        <div className="footer-btn-upvote footer-btn-suggest"
+                                            onClick={onHandleLike}
+                                            style={{
+                                                background:likeByMe(likes)?lightPrimaryColor:""
+                                            }}>
                                             <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
                                                 <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-no"></i>
                                                 <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-yes"></i>
@@ -263,8 +323,13 @@ const QuestionPage = props => {
                                                 UpVote
                                             </span>
                                         </div>
-                                        {question.dislike}
-                                        <div className="footer-btn-downvote footer-btn-suggest">
+                                        {dislikes.length}
+                                        <div className="footer-btn-downvote footer-btn-suggest"
+                                            onClick={onHandleDislike}
+                                            style={{
+                                                background:disLikeByMe(dislikes)?lightPrimaryColor:""
+                                            }}
+                                            >
                                             <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
                                             <span className="suggestions">
                                                 DownVote
@@ -323,7 +388,7 @@ const QuestionPage = props => {
                     </div>
                 </div>)}
             </Container>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

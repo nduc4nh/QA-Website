@@ -20,7 +20,7 @@ max-height:200px;
 width:100%;
 overflow-y: scroll;
 `
-const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx }) => {
+const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx, onClose }) => {
     const navigate = useNavigate()
     const inputRef = useRef();
     const [show, setShow] = useState(false)
@@ -125,10 +125,10 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx 
                 }
             })
             .then(res => {
-                console.log(res);
+                console.log(res,"check edit");
                 let newPostId = res.data._id
                 if (selectedFile.file) {
-                    axios
+                    axios   
                         .put(`${imageEnpoints}image/post/put/${newPostId}`, { image: `${imgbs64}` })
                         .then(res => {
                             console.log(res)
@@ -137,6 +137,7 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx 
                             console.log(e)
                         })
                 }
+                
                 navigate(`/question?questionId=${newPostId}`)
             })
             .catch(err => {
@@ -167,7 +168,7 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx 
                 }
             })
             .then(res => {
-                console.log(res);
+                console.log(res,"checkEdit");
                 let newPostId = res.data._id
                 if (selectedFile.file) {
                     axios
@@ -179,6 +180,7 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx 
                             console.log(e)
                         })
                 }
+                onClose(false)
                 navigate(`/question?questionId=${newPostId}`)
             })
             .catch(err => {
