@@ -36,6 +36,17 @@
     flex: 1;
 }
 
+<<<<<<< HEAD
 .footer{
     z-index: 1;
 }
+=======
+.key-word{
+    margin-top: 20px;
+    border: 2px solid #dfdfdf;
+    width: 89%;
+    height: 50px;
+    padding-top: 10px;
+    padding-left: 10px;
+}
+>>>>>>> c529a7e8fc3736cf3a0762d287b71dd4f5cffee0

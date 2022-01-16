@@ -7,6 +7,7 @@ import QuestionPage from './pages/QuestionPage';
 import Profile from './pages/Profile';
 import QueryPage from './pages/QueryPage';
 import SearchResultPage from './pages/SearchResultPage';
+import Search from './pages/Search';
 const App = () => {
   /*<Home/>*/
   return (
