@@ -111,6 +111,17 @@ const Navigationbar2 = ({ user }) => {
         }
 
     }
+    const onNav = () =>{
+        window.scrollTo(0, 0)
+        navigate("/")
+        window.onbeforeunload = function () {
+            return true;
+        };
+
+        return () => {
+            window.onbeforeunload = null;
+        };
+    }
 
     return (
         <div style ={{
@@ -120,7 +131,7 @@ const Navigationbar2 = ({ user }) => {
                 <div className='logo'>
                     <ImageWrapper source={logo} width={50} height={50} />
                 </div>
-                <CustomButton backgroundColor="white" hoverColor="white" onClick={() => (navigate("/"))}>
+                <CustomButton backgroundColor="white" hoverColor="white" onClick={onNav}>
                     <Brand>QA Website</Brand>
                 </CustomButton>
                 <div className='tool-group'>

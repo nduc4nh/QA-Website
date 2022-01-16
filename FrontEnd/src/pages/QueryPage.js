@@ -14,6 +14,8 @@ import axios from 'axios'
 import { backend } from '../store/endPoints'
 import { getOffsetTimeString } from '../utils/TimeConverter'
 import Footer from '../components/Footer'
+import Popup from '../components/Popup'
+import MemberAccessWarning from '../components/MemberAccessWarning'
 
 const QueryPage = () => {
     const [searchParams, setSearchParams] = useSearchParams()
@@ -21,12 +23,17 @@ const QueryPage = () => {
     const [queryContent, setQueryContent] = useState()
     const [questions, setQuestions] = useState()
     const [categories, setCategories] = useState()
+    const [listLikes, setListLikes] = useState()
+    const [warning, setWarning] = useState(false)
 
     console.log(search)
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(loadUser())
     }, [dispatch])
+
+    const user = useSelector((state) => state.auth)
+    window.scrollTo(0,0)
 
     if (kind === "tag") {
         axios
@@ -38,13 +45,13 @@ const QueryPage = () => {
                 console.log(e)
             })
     }
-    else if (kind === "category"){
+    else if (kind === "category") {
         axios
             .get(`${backend}category/${search}`)
-            .then(res =>{
+            .then(res => {
                 setQueryContent(res.data.title)
             })
-            .catch((e) =>{
+            .catch((e) => {
                 console.log(e)
             })
     }
@@ -54,6 +61,8 @@ const QueryPage = () => {
             .get(`${backend}article?tags=${search}&page=1`)
             .then(res => {
                 let posts = res.data.data
+                console.log(res.data.listLike)
+                setListLikes(res.data.listLike)
                 posts = posts.map((post) => {
                     let tmpost = { ...post }
                     tmpost.user = {
@@ -71,10 +80,13 @@ const QueryPage = () => {
             })
     }
 
-    const getPostByCategory  = () => {
+    const getPostByCategory = () => {
         axios
             .get(`${backend}article?categories=${search}&page=1`)
             .then(res => {
+                console.log(res.data)
+                console.log(res.data.listLike)
+                setListLikes(res.data.listLike)
                 let posts = res.data.data
                 posts = posts.map((post) => {
                     let tmpost = { ...post }
@@ -105,22 +117,32 @@ const QueryPage = () => {
                 console.log(e)
             })
     }
-    
+
     useEffect(() => {
         getCategory()
         if (kind === "tag") {
             getPostByTags()
         }
-        else if (kind === "category")
-        {
+        else if (kind === "category") {
             getPostByCategory()
         }
     }, [queryContent])
+    const getReaction = (item) => {
+        let reaction = listLikes.filter(react => react.articleId === item._id)
+        if (reaction.length > 0) return reaction[0]
+        return {
+            like: [],
+            dislike: []
+        }
+    }
 
-    const user = useSelector((state) => state.auth)
 
     return (
         <div className='home'>
+            {warning &&
+                <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
+                    <MemberAccessWarning></MemberAccessWarning>
+                </Popup>}
             <div className='header-home'>
                 <Navigationbar2 user={user} />
             </div>
@@ -135,14 +157,14 @@ const QueryPage = () => {
                     </div>
                     <div className='content-main-home'>
                         <IntroSearchDefault query={queryContent} kind={kind} />
-                        {questions && questions.map((item) => (<QuestionCard question={item} />))}
+                        {questions && (listLikes != undefined) && questions.map((item, i) => (getReaction(item) && (<QuestionCard question={item} reaction={getReaction(item)} user={user} warningFunc={setWarning} />)))}
                     </div>
                     <div className='content-right-side-home'>
                         s
                     </div>
                 </div>
             </Container>
-            <Footer/>
+            <Footer />
         </div>
     )
 }

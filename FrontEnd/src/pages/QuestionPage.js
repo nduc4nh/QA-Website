@@ -47,8 +47,8 @@ const QuestionPage = props => {
     const questionId = searchParams.get("questionId")
     const [category, setCategory] = useState()
 
-    const [dislikes,setDislikes] = useState(0)
-    const [likes,setLikes] = useState(0)
+    const [dislikes, setDislikes] = useState(0)
+    const [likes, setLikes] = useState(0)
     const [currentlyLike, setCurrentlyLike] = useState(0)
 
     const getPostImage = () => {
@@ -70,7 +70,7 @@ const QuestionPage = props => {
             })
 
     }
-
+    window.scrollTo(0,0)
     useEffect(() => {
         setSocket(io(socketServer))
     }, [])
@@ -104,7 +104,7 @@ const QuestionPage = props => {
                 console.log(res.data);
                 console.log(res, "checklikes")
                 let questionRes = res.data[0]
-                console.log(questionRes,"123")
+                console.log(questionRes, "123")
                 let date = new Date(questionRes.createdAt * 1000)
 
                 let newQuestion = {
@@ -229,8 +229,10 @@ const QuestionPage = props => {
                 }
             })
             .then(res => {
-                setLikes(prev=>[...prev,user])
-                setDislikes(prev=>prev.filter((item)=>(item._id !== user._id)))
+                if (likes.some((item) => (item._id === user._id))) setLikes(prev => prev.filter((item) => (item._id !== user._id)))
+                else setLikes(prev => [...prev, user])
+                setDislikes(prev => prev.filter((item) => (item._id !== user._id)))
+
                 console.log(res, "like")
             })
             .then((e) => {
@@ -246,8 +248,12 @@ const QuestionPage = props => {
                 }
             })
             .then(res => {
-                setDislikes(prev=>[...prev,user])
-                setLikes(prev=>prev.filter((item)=>(item._id !== user._id)))
+
+                if (dislikes.some((item) => (item._id === user._id))) setDislikes(prev => prev.filter((item) => (item._id !== user._id)))
+                else setDislikes(prev => [...prev, user])
+                setLikes(prev => prev.filter((item) => (item._id !== user._id)))
+
+
                 console.log(res, "dislike")
             })
             .then((e) => {
@@ -255,14 +261,14 @@ const QuestionPage = props => {
             })
     }
 
-    const likeByMe = (like) =>{
-        return like.some(item=>item._id === user._id)
+    const likeByMe = (like) => {
+        return like.some(item => item._id === user._id)
     }
-    const disLikeByMe = (dislike) =>{
+    const disLikeByMe = (dislike) => {
         return dislike.some(item => item._id === user._id)
     }
 
-  
+
 
     return (
         <div className='home'>
@@ -312,7 +318,7 @@ const QuestionPage = props => {
                                         <div className="footer-btn-upvote footer-btn-suggest"
                                             onClick={onHandleLike}
                                             style={{
-                                                background:likeByMe(likes)?lightPrimaryColor:""
+                                                background: likeByMe(likes) ? lightPrimaryColor : ""
                                             }}>
                                             <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
                                                 <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-no"></i>
@@ -327,9 +333,9 @@ const QuestionPage = props => {
                                         <div className="footer-btn-downvote footer-btn-suggest"
                                             onClick={onHandleDislike}
                                             style={{
-                                                background:disLikeByMe(dislikes)?lightPrimaryColor:""
+                                                background: disLikeByMe(dislikes) ? lightPrimaryColor : ""
                                             }}
-                                            >
+                                        >
                                             <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
                                             <span className="suggestions">
                                                 DownVote

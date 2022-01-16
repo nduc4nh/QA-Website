@@ -14,16 +14,20 @@ const App = () => {
     <Router>
       <Routes>
         <Route element={<HomePage />} path="/"></Route>
-        <Route element={<HomePage />} path="/:page"></Route>
+        <Route element={<HomePage />} path="/home"></Route>
+        <Route element={<HomePage />} path="/home/:page"></Route>
         <Route element={<QuestionPage />} path="/question/:questionId"></Route>
         <Route element={<QuestionPage />} path="/question/"></Route>
-        <Route  element={<Login />} path="/login/"></Route>
+        <Route element={<Login />} path="/login/"></Route>
         <Route element={<Register />} path="/register/"></Route>
         <Route element={<Profile />} path="/profile/:id"></Route>
         <Route element={<QueryPage />} path="/questions/:kind/:search" exact></Route>
-        <Route element={<SearchResultPage />} path="/search/:query"></Route>
-        <Route element={<SearchResultPage />} path="/search/"></Route>
-      </Routes>
+        <Route element={<SearchResultPage />} path="/searchs/:find" exact></Route>
+        <Route element={<SearchResultPage />} path="/:find" exact></Route>
+        <Route element={<SearchResultPage />} path="/search/" exact></Route>
+        <Route element={<HomePage />} path="/home"></Route>
+       
+      </Routes> 
     </Router>
   );
 }

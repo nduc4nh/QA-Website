@@ -109,7 +109,9 @@ const SearchBar = () => {
     }
 
     const handleOnSubmit = () =>{
-        if (query) navigate(`/search?query=${query}`)
+        console.log(query)
+        if (query) navigate(`/search?find=${query}`)
+        // if (query) navigate(`/search/${query}`)
     }
 
     return (

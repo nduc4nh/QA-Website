@@ -24,8 +24,10 @@ const InteractiveFooter = ({ like, dislike, user, questionId, warnFunc }) => {
                 }
             })
             .then(res => {
-                setLikes(prev => [...prev, user])
+                if (likes.some((item) => (item._id === user._id))) setLikes(prev => prev.filter((item) => (item._id !== user._id)))
+                else setLikes(prev => [...prev, user])
                 setDislikes(prev => prev.filter((item) => (item._id !== user._id)))
+
                 console.log(res, "like")
             })
             .then((e) => {
@@ -47,7 +49,8 @@ const InteractiveFooter = ({ like, dislike, user, questionId, warnFunc }) => {
                 }
             })
             .then(res => {
-                setDislikes(prev => [...prev, user])
+                if (dislikes.some((item) => (item._id === user._id))) setDislikes(prev => prev.filter((item) => (item._id !== user._id)))
+                else setDislikes(prev => [...prev, user])
                 setLikes(prev => prev.filter((item) => (item._id !== user._id)))
                 console.log(res, "dislike")
             })

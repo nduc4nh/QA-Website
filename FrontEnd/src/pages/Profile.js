@@ -35,7 +35,7 @@ const Profile = () => {
     useEffect(() => {
         dispatch(loadUser())
     }, [dispatch])
-
+    window.scrollTo(0,0)
     const user = useSelector((state) => state.auth)
     const imgb = getImage()
     console.log(imgb)

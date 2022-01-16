@@ -3,9 +3,11 @@ import UserHeaderGroup from './UserHeaderGroup'
 import './css/StretchCard.css'
 import { BsCheck } from 'react-icons/bs'
 import { FaQuestion } from 'react-icons/fa'
+import { useNavigate } from 'react-router'
 const StretchCard = ({ question }) => {
     const [pos, setPos] = useState(0)
     const [tickSize, setTickSize] = useState(20)
+    const navigate = useNavigate()
     const onEnterHandle = () => {
         setPos(pos - 10)
         setTickSize(tickSize+10)
@@ -21,7 +23,7 @@ const StretchCard = ({ question }) => {
     }
 
     return (
-        <div class="stretch-card-container">
+        <div class="stretch-card-container" onClick={() => navigate(`/question?questionId=${question._id}`)} style={{cursor:"pointer"}}>
             <div style={{
                 position: "absolute",
                 right:5,

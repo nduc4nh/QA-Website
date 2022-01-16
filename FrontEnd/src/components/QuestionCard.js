@@ -12,7 +12,6 @@ import { imageEnpoints } from '../store/endPoints'
 
 
 const QuestionCard = ({ question,reaction, user, warningFunc}) => {
-    console.log(reaction)
     const trunc = truncate(question.content)
     const path = `/question?questionId=${question._id}`
     const [postImage, setPostImage] = useState()

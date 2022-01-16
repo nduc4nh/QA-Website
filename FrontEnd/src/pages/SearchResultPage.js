@@ -15,18 +15,18 @@ import IntroSearchDefault from '../components/IntroSearchDefault'
 import { primaryGrey } from '../constant/color'
 const SearchResultPage = () => {
     const dispatch = useDispatch()
-    const [searchParams, setSearchParams] = useSearchParams()
-    const query = searchParams.get("query")
     const [results, setResults] = useState(["", ""])
     const [categories, setCategories] = useState()
-    const navigate = useNavigate()
-
+    
+    
     useEffect(() => {
         dispatch(loadUser())
     }, [dispatch])
 
     const user = useSelector((state) => state.auth)
-
+    const [searchParams, setSearchParams] = useSearchParams()
+    const query = searchParams.get("find")
+    
     const getCategory = () => {
         axios
             .get(`${backend}category`)
@@ -49,7 +49,7 @@ const SearchResultPage = () => {
                     axios
                         .get(`${backend}article?tags=${res.data.data[0]._id}`)
                         .then(res => {
-                            console.log(res.data, "tag")
+                            console.log(res.data,query, "tag")
                             let tmp = [...results]
                             tmp[0] = res.data.data
                             setResults(tmp)
@@ -65,7 +65,7 @@ const SearchResultPage = () => {
         axios
             .get(`${backend}article?slug=${query}`)
             .then(res => {
-                console.log(res.data, "Title")
+                console.log(res.data,query, "Title")
                 let tmp = [...results]
                 tmp[1] = res.data.data
                 setResults(tmp)
@@ -74,10 +74,13 @@ const SearchResultPage = () => {
                 console.log(e)
             })
     }
-    useEffect(() => {
+    const getAll = () =>{  
         getSearchByTag()
         getSearchByTitle()
         getCategory()
+    }
+    useEffect(() => {
+        getAll()
     }, [])
 
 
