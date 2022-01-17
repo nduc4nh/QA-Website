@@ -12,11 +12,11 @@ const NotificationBell = ({ number, size, items }) => {
             <CustomButton onClick = {() => (setIsOpen(!isOpen))}>
                 <BsBell size={size} />
                 <div className='noti-indicator'>
-                    <p style={{ color: "white", fontSize: 14, textAlign: "center" }}>{number}</p>
+                    <p style={{ color: "white", fontSize: 14, textAlign: "center" }}>{1}</p>
                 </div>
             </CustomButton>
             
-            {isOpen && <div
+            {false && isOpen && <div
                 style={{
                     position: "absolute",
                     top: 80,

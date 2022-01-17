@@ -373,7 +373,7 @@ const QuestionPage = props => {
                                 </div>
 
                                 <Container>
-                                    {postImage && <img src={postImage} />}
+                                    {postImage && <img src={postImage} style={{maxHeight:"600px", maxWidth:"700px"}}/>}
                                     <Card.Body>
                                         {question.content}
                                     </Card.Body>

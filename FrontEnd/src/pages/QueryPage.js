@@ -33,7 +33,7 @@ const QueryPage = () => {
     }, [dispatch])
 
     const user = useSelector((state) => state.auth)
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
 
     if (kind === "tag") {
         axios
@@ -138,32 +138,34 @@ const QueryPage = () => {
 
 
     return (
-        <div className='home'>
-            {warning &&
-                <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
-                    <MemberAccessWarning></MemberAccessWarning>
-                </Popup>}
-            <div className='header-home'>
-                <Navigationbar2 user={user} />
-            </div>
-            <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
-                <div className='content-home'>
-                    <div className='content-left-side-home'>
-                        {categories &&
-                            <CustomFlatList
-                                items={categories.map((item) => item.title)}
-                                controlVar={categories.map((item) => item._id)}
-                            />}
-                    </div>
-                    <div className='content-main-home'>
-                        <IntroSearchDefault query={queryContent} kind={kind} />
-                        {questions && (listLikes != undefined) && questions.map((item, i) => (getReaction(item) && (<QuestionCard question={item} reaction={getReaction(item)} user={user} warningFunc={setWarning} />)))}
-                    </div>
-                    <div className='content-right-side-home'>
-                        s
-                    </div>
+        <div style={{ position: "relative" }}>
+            <div className='home'>
+                {warning &&
+                    <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
+                        <MemberAccessWarning></MemberAccessWarning>
+                    </Popup>}
+                <div className='header-home'>
+                    <Navigationbar2 user={user} />
                 </div>
-            </Container>
+                <Container style={{ paddingLeft: "100px", paddingRight: "100px" }}>
+                    <div className='content-home'>
+                        <div className='content-left-side-home'>
+                            {categories &&
+                                <CustomFlatList
+                                    items={categories.map((item) => item.title)}
+                                    controlVar={categories.map((item) => item._id)}
+                                />}
+                        </div>
+                        <div className='content-main-home'>
+                            <IntroSearchDefault query={queryContent} kind={kind} />
+                            {questions && (listLikes != undefined) && questions.map((item, i) => (getReaction(item) && (<QuestionCard question={item} reaction={getReaction(item)} user={user} warningFunc={setWarning} />)))}
+                        </div>
+                        <div className='content-right-side-home'>
+                            s
+                        </div>
+                    </div>
+                </Container>
+            </div>
             <Footer />
         </div>
     )

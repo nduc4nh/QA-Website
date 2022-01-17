@@ -11,7 +11,7 @@ const Footer = () => {
         <div style={{
             display: 'flex',
             flexDirection: 'row',
-            position:"absolute",
+           
             width: "100%",
             height: "250px",
             bottom: "-400px",
