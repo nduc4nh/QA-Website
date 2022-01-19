@@ -39,7 +39,7 @@ export const loadUser = () =>{
     }
 }
 
-export const signIn = (user) =>{
+export const signIn = (user,asAdmin) =>{
     return (dispatch) => {
         axios
         .post(`${backend}user/login`,user)
@@ -48,7 +48,8 @@ export const signIn = (user) =>{
             localStorage.setItem("token", res.data.token)
             dispatch({
                 type: "SIGN_IN",
-                token: res.data.token
+                token: res.data.token,
+                asAdmin: asAdmin
             })
             axios
             .get(`${imageEnpoints}image/get/${res.data._id}`)
@@ -68,6 +69,9 @@ export const signIn = (user) =>{
         })
     }
 }
+
+
+
 
 export const signOut = () =>{
     return (dispatch) => {

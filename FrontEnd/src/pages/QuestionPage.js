@@ -70,7 +70,7 @@ const QuestionPage = props => {
             })
 
     }
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0)
     useEffect(() => {
         setSocket(io(socketServer))
     }, [])
@@ -129,7 +129,11 @@ const QuestionPage = props => {
                 if (questionRes.dislike.some((item) => item._id === user._id)) setCurrentlyLike(-1)
 
                 axios
-                    .get(backend + "user/" + questionRes.createdBy)
+                    .get(backend + "user/" + questionRes.createdBy,{
+                        headers:{
+                            "x-access-token":localStorage.getItem("token")
+                        }
+                    })
                     .then(response => {
                         let poster = response.data
                         setPoster({
@@ -271,129 +275,132 @@ const QuestionPage = props => {
 
 
     return (
-        <div className='home'>
-            {edit &&
-                <Popup handleClose={() => setEdit(false)} title={"Update Question"} >
-                    <div style={{ width: "100%", height: "100%", paddingRight: "15px" }}>
-                        <AddQuestionForm onClose={setEdit} edit={true} postTitle={question.title} content={question.content} tags={tags} category={category} idx={question._id} />
-                    </div>
-                </Popup>}
-            {warning &&
-                <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
-                    <MemberAccessWarning></MemberAccessWarning>
-                </Popup>}
-
-            <div className='header-home'>
-                <Navigationbar2 user={user} />
-            </div>
-            <Container style={{ paddingLeft: "100px", paddingRight: "100px", paddingTop: "50px" }}>
-                {question && (<div className='content-home'>
-                    <div className='content-main-home'>
-                        <div className="content-header-container" style={{ minHeight: 100 }}>
-                            <div style={{ display: "flex", flexDirection: "row" }}>
-                                <div style={{ fontSize: 40, fontWeight: "bold" }}>
-                                    {question.title}
-                                </div>
-
-                                {(poster && poster._id === user._id) ?
-                                    <div style={{ margin: "5px" }}>
-                                        <CustomButton border={"20px"} onClick={() => setEdit(!edit)}>
-                                            <BsPencilFill color="grey" />
-                                        </CustomButton>
-                                    </div>
-                                    :
-                                    <></>
-                                }
-                            </div>
-                            <div className="title-footer" style={{ alignSelf: "end" }}>
-
-                                <div className="btn-answer">
-                                    <i class="far fa-edit btn-answer-icon"></i>
-                                    Answer
-                                </div>
-                                <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
-
-                                    <div className="vote">
-                                        {likes.length}
-                                        <div className="footer-btn-upvote footer-btn-suggest"
-                                            onClick={onHandleLike}
-                                            style={{
-                                                background: likeByMe(likes) ? lightPrimaryColor : ""
-                                            }}>
-                                            <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
-                                                <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-no"></i>
-                                                <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-yes"></i>
-                                            </span>
-
-                                            <span className="suggestions">
-                                                UpVote
-                                            </span>
-                                        </div>
-                                        {dislikes.length}
-                                        <div className="footer-btn-downvote footer-btn-suggest"
-                                            onClick={onHandleDislike}
-                                            style={{
-                                                background: disLikeByMe(dislikes) ? lightPrimaryColor : ""
-                                            }}
-                                        >
-                                            <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
-                                            <span className="suggestions">
-                                                DownVote
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <div style = {{position:"relative"}}>
+            <div className='home'>
+                {edit &&
+                    <Popup handleClose={() => setEdit(false)} title={"Update Question"} >
+                        <div style={{ width: "100%", height: "100%", paddingRight: "15px" }}>
+                            <AddQuestionForm onClose={setEdit} edit={true} postTitle={question.title} content={question.content} tags={tags} category={category} idx={question._id} />
                         </div>
-                        <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "10px" }}>
-                            {tags && tags.map((tag, idx) =>
+                    </Popup>}
+                {warning &&
+                    <Popup handleClose={() => setWarning(false)} title={"Member Access Requirement"} >
+                        <MemberAccessWarning></MemberAccessWarning>
+                    </Popup>}
+
+                <div className='header-home'>
+                    <Navigationbar2 user={user} />
+                </div>
+                <Container style={{ paddingLeft: "100px", paddingRight: "100px", paddingTop: "50px" }}>
+                    {question && (<div className='content-home'>
+                        <div className='content-main-home'>
+                            <div className="content-header-container" style={{ minHeight: 100 }}>
                                 <div style={{ display: "flex", flexDirection: "row" }}>
-                                    <Tag label={tag} removable={false} tagId={question.tags[idx]} />
-                                </div>
-                            )}
-                        </div>
-                        <Dropdown.Divider />
+                                    <div style={{ fontSize: 40, fontWeight: "bold" }}>
+                                        {question.title}
+                                    </div>
 
-                        <div className="content-body-container">
-                            <div className="content-question-container">
-                                <div className="poster-container">
-                                    <Image src={poster && poster.avatar} roundedCircle />
-                                    <div className="poster-info-holder">
-                                        <div className="poster-name-holder">
-                                            <div style={{ font: "bold", fontSize: 20 }}>
-                                                {poster && poster.name}
-                                            </div>
+                                    {(poster && poster._id === user._id) ?
+                                        <div style={{ margin: "5px" }}>
+                                            <CustomButton border={"20px"} onClick={() => setEdit(!edit)}>
+                                                <BsPencilFill color="grey" />
+                                            </CustomButton>
                                         </div>
-                                        <div className="poster-date-holder">
-                                            <div style={{ fontSize: 15, color: "grey" }}>
-                                                {question.date}
+                                        :
+                                        <></>
+                                    }
+                                </div>
+                                <div className="title-footer" style={{ alignSelf: "end" }}>
+
+                                    <div className="btn-answer">
+                                        <i class="far fa-edit btn-answer-icon"></i>
+                                        Answer
+                                    </div>
+                                    <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+
+                                        <div className="vote">
+                                            {likes.length}
+                                            <div className="footer-btn-upvote footer-btn-suggest"
+                                                onClick={onHandleLike}
+                                                style={{
+                                                    background: likeByMe(likes) ? lightPrimaryColor : ""
+                                                }}>
+                                                <span class="footer-btn-upvote__like footer-btn-upvote__like-liked">
+                                                    <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-no"></i>
+                                                    <i className="fas fa-arrow-alt-circle-up footer-btn-upvote__like-yes"></i>
+                                                </span>
+
+                                                <span className="suggestions">
+                                                    UpVote
+                                                </span>
+                                            </div>
+                                            {dislikes.length}
+                                            <div className="footer-btn-downvote footer-btn-suggest"
+                                                onClick={onHandleDislike}
+                                                style={{
+                                                    background: disLikeByMe(dislikes) ? lightPrimaryColor : ""
+                                                }}
+                                            >
+                                                <i class="far fa-arrow-alt-circle-down footer-btn--icon"></i>
+                                                <span className="suggestions">
+                                                    DownVote
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div style={{ display: "flex", flexDirection: "row", width: "100%", marginTop: "10px" }}>
+                                {tags && tags.map((tag, idx) =>
+                                    <div style={{ display: "flex", flexDirection: "row" }}>
+                                        <Tag label={tag} removable={false} tagId={question.tags[idx]} />
+                                    </div>
+                                )}
+                            </div>
+                            <Dropdown.Divider />
 
-                                <Container>
-                                    {postImage && <img src={postImage} style={{maxHeight:"600px", maxWidth:"700px"}}/>}
-                                    <Card.Body>
-                                        {question.content}
-                                    </Card.Body>
-                                </Container>
-                            </div>
-                            <Dropdown.Divider />
-                            <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
-                                {'' + question.comments.length + (question.comments.length <= 1 ? " Answer" : " Answers")}
-                            </div>
-                            <Dropdown.Divider />
-                            <div className="content-answer-container">
-                                {poster && <CommentBar inputRef={inputRef} submit={onHandlePushComment} />}
-                                <CommentBox comments={question.comments} socket={socket} />
+                            <div className="content-body-container">
+                                <div className="content-question-container">
+                                    <div className="poster-container">
+                                        <Image src={poster && poster.avatar} roundedCircle />
+                                        <div className="poster-info-holder">
+                                            <div className="poster-name-holder">
+                                                <div style={{ font: "bold", fontSize: 20 }}>
+                                                    {poster && poster.name}
+                                                </div>
+                                            </div>
+                                            <div className="poster-date-holder">
+                                                <div style={{ fontSize: 15, color: "grey" }}>
+                                                    {question.date}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <Container>
+                                        {postImage && <img src={postImage} style={{ maxHeight: "600px", maxWidth: "700px" }} />}
+                                        <Card.Body>
+                                            {question.content}
+                                        </Card.Body>
+                                    </Container>
+                                </div>
+                                <Dropdown.Divider />
+                                <div style={{ fontWeight: "bold", fontSize: "1.2rem" }}>
+                                    {'' + question.comments.length + (question.comments.length <= 1 ? " Answer" : " Answers")}
+                                </div>
+                                <Dropdown.Divider />
+                                <div className="content-answer-container">
+                                    {poster && <CommentBar inputRef={inputRef} submit={onHandlePushComment} />}
+                                    <CommentBox comments={question.comments} socket={socket} />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='content-right-side-home' style={{ marginTop: "100px" }}>
-                    </div>
-                </div>)}
-            </Container>
+                        <div className='content-right-side-home' style={{ marginTop: "100px" }}>
+                        </div>
+                    </div>)}
+                </Container>
+
+            </div>
             <Footer />
         </div>
     )

@@ -1,6 +1,6 @@
-export const truncate = (string) => {
-    let re = string.length >= 180 ? string.slice(0, 180) + "..." : string
-    return [re, string.length >= 180]
+export const truncate = (string, limit= 180) => {
+    let re = string.length >= limit ? string.slice(0, limit) + "..." : string
+    return [re, string.length >= limit]
 }
 
 export const toBase64 = file => new Promise((resolve, reject) => {

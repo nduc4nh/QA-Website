@@ -8,6 +8,7 @@ import Profile from './pages/Profile';
 import QueryPage from './pages/QueryPage';
 import SearchResultPage from './pages/SearchResultPage';
 import Search from './pages/Search';
+import AdminPage from './pages/AdminPage';
 const App = () => {
   /*<Home/>*/
   return (
@@ -26,6 +27,7 @@ const App = () => {
         <Route element={<SearchResultPage />} path="/:find" exact></Route>
         <Route element={<SearchResultPage />} path="/search/" exact></Route>
         <Route element={<HomePage />} path="/home"></Route>
+        <Route element={<AdminPage />} path="/admin/home"></Route>
        
       </Routes> 
     </Router>

@@ -4,12 +4,14 @@ import './css/Login_Register.css'
 import '../assets/fontawesome-free-5.15.4-web/js/all.js'
 import { useNavigate } from 'react-router'
 import { loadUser, signIn } from '../store/action/authActions'
-import {} from "react-router"
+import { } from "react-router"
 import { Link } from 'react-router-dom'
 
 const Login = () => {
 
     const auth = useSelector((state) => state.auth)
+    const [asAdmin, setAsAdmin] = useState(false)
+
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -44,26 +46,30 @@ const Login = () => {
             setCriteria({ ...criteria, noUsername: true })
             stop = true
         }
-
+        console.log(asAdmin)
         if (stop) return
+        dispatch(signIn(user, asAdmin?1:0)) 
 
-        dispatch(signIn(user))
         setUser({
             username: "",
             password: ""
         })
+        
 
     }
-    console.log(auth, "hi");
+    
     if (auth._id) {
-        navigate("/",{replace:true})
+        console.log(auth, "check")
+        if (auth.asAdmin === 1 && auth.isAdministrator === 1) navigate("/admin/home", { replace: true })
+        else if (auth.asAdmin === 1) console.log("warn")
+        else  navigate("/", { replace: true })
     }
 
     return (
         <div className="login-background">
             <div className="login-container">
                 <div className="login-content">
-                    <Link to="/" style={{textDecoration:"none"}}><div className="col-12 text-header" style={{cursor:"pointer"}}>QA Website</div></Link>
+                    <Link to="/" style={{ textDecoration: "none" }}><div className="col-12 text-header" style={{ cursor: "pointer" }}>QA Website</div></Link>
                     <div className="col-12 text-header">Login</div>
 
                     <div className="col-12 form-group login-input">
@@ -83,7 +89,10 @@ const Login = () => {
                             onClick={() => setCriteria({ ...criteria, noUsername: false, noPassword: false })}
                             value={user.password.trim()}></input>
                     </div>
-
+                    <div>
+                        <input type={"checkbox"} onChange={(e) => setAsAdmin(e.target.checked)} defaultChecked={false}/>
+                        <span> Login as admin</span>
+                    </div>
                     <div className="col-12 ">
                         <button className="btn-login" onClick={handleOnSubmit}>Login</button>
                     </div>
