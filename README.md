@@ -16,7 +16,7 @@
 
 
 
-### Execution guidlines
+### Execution guidelines
 
 * Step 1: preparing libraries for image server:
  
