@@ -1,6 +1,68 @@
 # QA-Website
 
 ## QA - Website
+### Team
+
+**Member**
+
+* **Nguyễn Đức Anh - 20172937** [Leader]
+* **Bùi Hoàng Lọc - 20173237**
+* **Phạm Thanh Bình - 20183693**
+* **Phạm Văn Quốc - 20183815**
+
+**Contribution**
+
+<table>
+ <tr>
+  <td>
+   Name
+   </td>
+  <td>
+   tasks
+   </td>
+ </tr>
+ <tr>
+  <td>
+   Nguyễn Đức Anh
+   </td>
+  <td>
+   Frontend: HomePage, Question Page, Search Result Page; Servers: utility servers (Image server, socket) 
+   </td>
+ </tr>
+ 
+ 
+ <tr>
+  <td>
+   Bùi Hoàng Lọc
+   </td>
+  <td>
+   Frontend: Frontend-support: Admin Page, beautfying UI
+   </td>
+ </tr>
+ 
+ <tr>
+  <td>
+   Phạm Thanh Bình
+   </td>
+  <td>
+   Backend: Apis, Database design
+   </td>
+ </tr>
+ 
+ 
+ <tr>
+  <td>
+   Phạm Văn Quốc
+   </td>
+  <td>
+   Backend-support, tester   </td>
+ </tr>
+ 
+ </table>
+
+
+**Contribution**
+
 
 ### Requirements
 
@@ -61,7 +123,7 @@ npm i
 npm start
 ```
 
-* Note: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below:
+* Note: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below (change it to your own IP):
 
  Frontend/store/endpoints.js
  
