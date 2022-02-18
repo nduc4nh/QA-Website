@@ -81,10 +81,13 @@ const AdminPostTable = ({ chosenUser }) => {
                 <div className="home-product__tilter--header">
                     <div class="grid__row">
                         <div class="grid__column-2-product">
+                            
+                        </div>
+                        <div class="grid__column-2-product">
                             Id
                         </div>
                         <div class="grid__column-2-product">
-                            Title
+                            Name
                         </div>
                         <div class="grid__column-2-product">
                             Date
@@ -101,16 +104,14 @@ const AdminPostTable = ({ chosenUser }) => {
                         <div class="grid__column-2-product">
                             Choose
                         </div>
-                        <div class="grid__column-2-product">
-                            Inspect
-                        </div>
                     </div>
                 </div>
                 {!posts ?
                     <div style={{ display: "flex", justifyContent: "center" }}>No post available</div>
                     : <></>}
                 <div style={{ overflowY: "scroll" }}>
-                    {posts && (posts === [] ? posts.map((item, i) =>
+                    {console.log(posts)}
+                    {posts && (!(posts === []) ? posts.map((item, i) =>
                         <AdminPostTableItem
                             id={item._id}
                             title={truncate(item.title, 10)}

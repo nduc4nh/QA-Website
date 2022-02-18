@@ -58,7 +58,7 @@ const AdminPage = () => {
                             <div class="grid__column-10">
                                 <a href = "https://www.google.com" ref={ref} hidden>a</a>
                                 <div onClick={() => ref.current.click()}>
-                                    asdasd
+                                _
                                 </div>
                                 <div className="grid__column-10-part">
                                     <AdminUserTable setChosenUser = {setChosenUser}/>
