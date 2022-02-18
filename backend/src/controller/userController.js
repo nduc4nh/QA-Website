@@ -15,12 +15,12 @@ module.exports = (container) => {
         likeRepo
     } = container.resolve('repo')
     const MAX_LOGIN = +process.env.MAX_LOGIN || 2
-    //  userRepo.addUser({
-    //     name: 'binh',
-    //     isAdministrator: 1,
-    //     username: 'admin',
-    //     password: serverHelper.encryptPassword('123456')
-    // }).catch(() => {})
+     userRepo.addUser({
+        name: 'binh',
+        isAdministrator: 1,
+        username: 'admin',
+        password: serverHelper.encryptPassword('123456')
+    }).catch(() => {})
     const addUser = async (req, res) => {
         try {
             const body = req.body
