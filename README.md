@@ -123,7 +123,7 @@ npm i
 npm start
 ```
 
-* Note: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below:
+* Note: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below (change it to your own IP):
 
  Frontend/store/endpoints.js
  
