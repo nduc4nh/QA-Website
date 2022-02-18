@@ -5,10 +5,10 @@
 
 **Member**
 
-* Nguyễn Đức Anh 20172937 [Leader]
-* Bùi Hoàng Lọc 20173237
-* Phạm Thanh Bình 20183693
-* Phạm Văn Quốc 20183815
+* **Nguyễn Đức Anh - 20172937** [Leader]
+* **Bùi Hoàng Lọc - 20173237**
+* **Phạm Thanh Bình - 20183693**
+* **Phạm Văn Quốc - 20183815**
 
 **Contribution**
 
