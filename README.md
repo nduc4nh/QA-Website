@@ -122,15 +122,15 @@ cd /path/to/frontend
 npm i
 npm start
 ```
-* Note 1: Admin account: usename/password = admin/123456
+* **Note 1**: Admin account: usename/password = admin/123456
 
-* Note 2: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below (change it to your own IP):
+* **Note 2**: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below (change it to your own IP):
 
  Frontend/../src/store/endpoints.js
  
  utility_servers/image-server/api.py 
 
-* Note 3: to add category into database, use postman or cmd and follow the below instruction:
+* **Note 3**: to add category into database, use postman or cmd and follow the below instruction:
 
 ```
 # Postman
