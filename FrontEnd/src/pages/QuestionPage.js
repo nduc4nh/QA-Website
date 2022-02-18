@@ -20,9 +20,10 @@ import AddQuestionForm from '../components/AddQuestionForm'
 import MemberAccessWarning from '../components/MemberAccessWarning'
 import { useNavigate } from 'react-router'
 import { imageEnpoints } from '../store/endPoints'
-import { dataURLtoFile } from '../utils/StringProcessing'
+import { dataURLtoFile, checkSlang} from '../utils/StringProcessing'
 import Footer from '../components/Footer'
 import { lightPrimaryColor, primaryColor } from '../constant/color'
+import { SLANG } from '../constant/slang'
 
 const useFocus = () => {
 
@@ -192,6 +193,8 @@ const QuestionPage = props => {
             setWarning(true)
             return
         }
+        if (checkSlang(cmt, SLANG)) return
+        
         let postTime = Math.floor(new Date().getTime() / 1000.0)
         socket.emit("pushComment", {
             message: cmt,

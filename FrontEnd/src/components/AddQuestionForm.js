@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router'
 import Dropdown from './Dropdown'
 import { getAllCategory } from '../store/action/authActions'
 import { AiFillCaretDown, AiFillCaretUp } from 'react-icons/ai'
-import { toBase64 } from '../utils/StringProcessing'
+import { checkSlang, toBase64 } from '../utils/StringProcessing'
+import { SLANG } from '../constant/slang'
 
 const TextArea = styled.textarea
     `
@@ -107,9 +108,15 @@ const AddQuestionForm = ({ postTitle, content, tags, image, edit, category, idx,
         if (content.trim() === "") return
         if (title.trim() === "") return
         if (chosenCategory === undefined) return
+        
+        if (checkSlang(title.trim(), SLANG)) return
+        if (checkSlang(content.trim(), SLANG)) return
+        if (checkSlang(tagList.join(",").trim(), SLANG)) return
+        
+        console.log(`${title} ${content} ${tagList.join(" ")}`.trim())
         let article = {
             title: title,
-            content: content,
+            content: content,   
             categories: [chosenCategory._id],
             tags: tagList
         }

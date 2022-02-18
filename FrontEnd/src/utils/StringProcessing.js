@@ -26,3 +26,12 @@ export const dataURLtoFile = (dataurl, filename) =>{
     
     return new File([u8arr], filename, {type:mime});
 }
+
+export const checkSlang = (str, SLANG) =>{
+    for (let ele of str.split(" ")){
+        for (let slg of SLANG){
+            if (ele.trim() === slg.trim()) return true
+        }
+    }
+    return false
+}
