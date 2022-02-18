@@ -1,0 +1,288 @@
+login: POST: http://127.0.0.1:8002/user/login
+	{
+	username: string
+	password: string
+}
+
+{
+    "username": "admin",
+    "password": "123456"
+
+}
+
+{
+    "_id": "61beea0d27820018109812b1",
+    "name": "binh",
+    "isAdministrator": 1,
+    "username": "admin",
+    "createdAt": 1639901709,
+    "__v": 0,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MWJlZWEwZDI3ODIwMDE4MTA5ODEyYjEiLCJuYW1lIjoiYmluaCIsImlzQWRtaW5pc3RyYXRvciI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImNyZWF0ZWRBdCI6MTYzOTkwMTcwOSwiX192IjowLCJpYXQiOjE2Mzk5MDE3MTcsImV4cCI6MTYzOTk4ODExN30.ylxpPL_4b7uFDcgJNQr4VlQ3xrzrRVtA8K_I4Gm0s4Q"
+}
+
+req.headers['x-access-token']
+logout: GET: http://127.0.0.1:8002/user/logout
+
+
+register: POST: http://127.0.0.1:8002/register
+
+{
+    "name": "Loc",
+    "username": "BINHHGG",
+    "password": "123456"
+}
+{
+    "msg": "Thêm thành công.",
+    "data": {
+        "_id": "61beefbfbadcff1224d1103e",
+        "name": "Loc",
+        "username": "binhhgg",
+        "password": "jZae727K08KaOmKSgOaGzww/XVqGr/PKEgIMkjrcbJI=",
+        "isAdministrator": 0,
+        "createdAt": 1639903167,
+        "__v": 0
+    }
+}
+
+POST Category: http://127.0.0.1:8002/category
+{
+    "title": "Nhân văn"
+}
+{
+    "_id": "61c4ad731455b5397c0a0414",
+    "title": "Nhân văn",
+    "createdAt": 1640279411,
+    "__v": 0
+}
+POST Article: http://127.0.0.1:8002/article
+{
+    "title": "co ban ve html css",
+    "content": "asdasdadas",
+    "categories": ["61c29692462600245cca452e"], // lấy _id của 1 categories , truyền dạng mảng
+    "tags": ["HTML", "CSS"] // truyền dạng mảng
+}
+{
+    "categories": [
+        "61c29692462600245cca452e"
+    ],
+    "tags": [
+        "61c332db2bffd30230cabe9a",
+        "61c4a82ce2f466b2c9e7214e"
+    ],
+    "_id": "61c4aaeb32cb2148fcf375b9",
+    "title": "co ban ve html css",
+    "content": "asdasdadas",
+    "like": 0,
+    "dislike": 0,
+    "slug": "co ban ve html css",
+    "createdBy": "61beea0d27820018109812b1",
+    "createdAt": 1640278763,
+    "__v": 0
+}
+
+
+GET Article: ví dụ http://127.0.0.1:8002/article/61c4aaeb32cb2148fcf375b9
+{
+    "categories": [
+        "61c29692462600245cca452e"
+    ],
+    "tags": [
+        "61c332db2bffd30230cabe9a",
+        "61c4a82ce2f466b2c9e7214e"
+    ],
+    "_id": "61c4aaeb32cb2148fcf375b9",
+    "title": "co ban ve html css",
+    "content": "asdasdadas",
+    "like": 0,
+    "dislike": 0,
+    "slug": "co ban ve html css",
+    "createdBy": "61beea0d27820018109812b1",
+    "createdAt": 1640278763,
+    "__v": 0
+}
+
+
+POST Comment: http://127.0.0.1:8002/comment
+{
+    "articleId": "61c4aaeb32cb2148fcf375b9",
+    "content": "asdsadasdasdasdsadasdasdasdadấdasdasdasdasdas"
+}
+{
+    "_id": "61c4b6211d29e24a94d57eee",
+    "articleId": "61c4aaeb32cb2148fcf375b9",
+    "content": "asdsadasdasdasdsadasdasdasdadấdasdasdasdasdas",
+    "userId": "61beea0d27820018109812b1",
+    "like": 0,
+    "dislike": 0,
+    "createdAt": 1640281633,
+    "updateAt": 1640281633,
+    "__v": 0
+}
+GET Article and comment: http://127.0.0.1:8002/article/comments/61c4aaeb32cb2148fcf375b9
+[
+    {
+        "_id": "61c4aaeb32cb2148fcf375b9",
+        "categories": [
+            "61c29692462600245cca452e"
+        ],
+        "tags": [
+            "61c332db2bffd30230cabe9a",
+            "61c4a82ce2f466b2c9e7214e"
+        ],
+        "title": "co ban ve html css",
+        "content": "asdasdadas",
+        "like": 0,
+        "dislike": 0,
+        "slug": "co ban ve html css",
+        "createdBy": "61beea0d27820018109812b1",
+        "createdAt": 1640278763,
+        "__v": 0,
+        "comments": [
+            {
+                "_id": "61c4b0c3c3867f4a9c40339e",
+                "articleId": "61c4aaeb32cb2148fcf375b9",
+                "content": "ahgsdkashdjad",
+                "userId": "61beea0d27820018109812b1",
+                "like": 0,
+                "dislike": 0,
+                "createdAt": 1640280259,
+                "updateAt": 1640280259,
+                "__v": 0,
+                "userComment": [
+                    {
+                        "_id": "61beea0d27820018109812b1",
+                        "name": "binh",
+                        "isAdministrator": 1,
+                        "username": "admin",
+                        "createdAt": 1639901709,
+                        "__v": 0
+                    }
+                ]
+            },
+            {
+                "_id": "61c4b0cac3867f4a9c4033a0",
+                "articleId": "61c4aaeb32cb2148fcf375b9",
+                "content": "asdsadasdasdasdsadasdasdasdadas",
+                "userId": "61beea0d27820018109812b1",
+                "like": 0,
+                "dislike": 0,
+                "createdAt": 1640280266,
+                "updateAt": 1640280266,
+                "__v": 0,
+                "userComment": [
+                    {
+                        "_id": "61beea0d27820018109812b1",
+                        "name": "binh",
+                        "isAdministrator": 1,
+                        "username": "admin",
+                        "createdAt": 1639901709,
+                        "__v": 0
+                    }
+                ]
+            },
+            {
+                "_id": "61c4b378c39dd730b81f5592",
+                "articleId": "61c4aaeb32cb2148fcf375b9",
+                "content": "asdsadasdasdasdsadasdasdasdadấdasdasdasdasdas",
+                "userId": "61beea0d27820018109812b1",
+                "like": 0,
+                "dislike": 0,
+                "createdAt": 1640280952,
+                "updateAt": 1640280952,
+                "__v": 0,
+                "userComment": [
+                    {
+                        "_id": "61beea0d27820018109812b1",
+                        "name": "binh",
+                        "isAdministrator": 1,
+                        "username": "admin",
+                        "createdAt": 1639901709,
+                        "__v": 0
+                    }
+                ]
+            },
+            {
+                "_id": "61c4b6211d29e24a94d57eee",
+                "articleId": "61c4aaeb32cb2148fcf375b9",
+                "content": "asdsadasdasdasdsadasdasdasdadấdasdasdasdasdas",
+                "userId": "61beea0d27820018109812b1",
+                "like": 0,
+                "dislike": 0,
+                "createdAt": 1640281633,
+                "updateAt": 1640281633,
+                "__v": 0,
+                "userComment": [
+                    {
+                        "_id": "61beea0d27820018109812b1",
+                        "name": "binh",
+                        "isAdministrator": 1,
+                        "username": "admin",
+                        "createdAt": 1639901709,
+                        "__v": 0
+                    }
+                ]
+            }
+        ]
+    }
+]
+
+get article: http://127.0.0.1:8002/article
+get article theo 1 user: http://127.0.0.1:8002/article?createdBy=61beea0d27820018109812b1
+get article theo 1 category: http://127.0.0.1:8002/article?categories=61c29692462600245cca452e
+get article theo 1 tags: http://127.0.0.1:8002/article?tags=61c332db2bffd30230cabe9a
+
+put acticle: http://127.0.0.1:8002/article/61c4aaeb32cb2148fcf375b9
+sẽ getById trước lấy thông tin như kia xong sửa gì thì chỉ cần thay thế trường đó vào xong gọi api put là được
+
+{
+    "categories": [
+        "61c29692462600245cca452e"
+    ],
+    "tags": [
+        "61c332db2bffd30230cabe9a",
+        "61c4a82ce2f466b2c9e7214e"
+    ],
+    "_id": "61c4aaeb32cb2148fcf375b9",
+    "title": "co ban ve html css abcdef",
+    "content": "asdasdadas ahshhdbbdasaaasda",
+    "like": 0,
+    "dislike": 0,
+    "slug": "co ban ve html css",
+    "createdBy": "61beea0d27820018109812b1",
+    "createdAt": 1640278763,
+    "__v": 0
+}
+
+
+put user: http://127.0.0.1:8002/user/61beea0d27820018109812b1
+{
+    "name": "binhhg",
+    "email": "binhhg",
+    "phoneNumber": 123456789,
+    "image": "nếu cần thì thêm trường này"
+}
+
+đổi password: http://127.0.0.1:8002/user/changepassword
+{
+   "oldPassword": "123456",
+   "newPassword": "1234567"
+}
+
+
+
+search article theo  title
+http://127.0.0.1:8002/article?slug=
+search article theo tags, thì gọi api search ra cái tags đấy trong chuyền id vào api thứ 2
+http://127.0.0.1:/tag?slug=
+http://127.0.0.1:8002/article?tags=
+
+Hoặc gọi api http://127.0.0.1:/tag/list để trả ra list các tag rồi a search tags trên front end = filter
+xong truyền id vào api http://127.0.0.1:8002/article?tags=
+
+
+like :PUT: http://127.0.0.1:8002/like/like/:id  // id là Id của article
+dislikeL PUT: http://127.0.0.1:8002/like/dislike/:id // id là Id của article
+
+
+get user: GET http://localhost:8002/user
+delete user: DELETE http://localhost:8002/user/:id
