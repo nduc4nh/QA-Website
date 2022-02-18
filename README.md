@@ -86,7 +86,7 @@
  # IBM cloud object storage sdk
  # Flask (just a few lines of codes :) )
  
- cd /path/to/utility_servers
+ cd /path/to/project
  pip install -r requirements.txt
 
  ```
@@ -125,6 +125,24 @@ npm start
 
 * Note: This project hasn't been deployed yet on any platform, in order to run this locallty, please configure the `ip address` in several files listed below (change it to your own IP):
 
- Frontend/store/endpoints.js
+ Frontend/../src/store/endpoints.js
  
  utility_servers/image-server/api.py 
+
+* Note 2: to add category into database, use postman or cmd and follow the below instruction:
+
+```
+# Postman
+[POST]: http://localhost:8002/category
+[BODY - raw]
+{
+ title:[category name]
+}
+
+# CMD
+1. Refer to content in file: 'create_category.sh'
+2. Copy all the lines or single line one by one and paste them into cmd interface
+2.1 Each line will has the form as below:
+ 
+curl -X POST localhost:8002/category -H "Content-Type: application/json" -d '{"title": "Anything"}'
+```
